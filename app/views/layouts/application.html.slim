@@ -1,0 +1,9 @@
+doctype html
+html
+  = render 'head'
+body(class="#{controller_classes}")
+  = render 'header'
+  .ui.main.text.container
+    = render 'notice'
+    = yield
+  = render 'footer'

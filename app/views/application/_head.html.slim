@@ -1,0 +1,14 @@
+head
+  title
+    = content_for?(:title) ? yield(:title) : 'Nihongo中心'
+  link(rel="shortcut icon" href="/images/favicon/favicon.png")
+  meta(name="description" content="Nihongo中心のメイン機能チャットルームです。楽しくチャットしましょう。 チャットルーム")
+  meta(name="keywords" content="Chat チャット 日本語中心 Nihongo中心 フリー free チャットルーム")
+  meta(charset="utf-8")
+  meta(meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no")
+  = csrf_meta_tags
+  = csp_meta_tag
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+  = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  - if Rails.env.production?
+    = render 'analytics'
