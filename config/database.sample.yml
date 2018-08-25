@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  encoding: utf8
+  username: username
+  password: password
+  host: localhost
+
+development:
+  <<: *default
+  database: www_nihongo_chushin_com_development
+
+test:
+  <<: *default
+  database: www_nihongo_chushin_com_test
