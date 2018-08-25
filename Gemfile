@@ -114,6 +114,8 @@ group :development do
 end
 
 group :test do
+  gem 'mock_redis'
+  gem 'simplecov'
   gem 'timecop'
   gem 'vcr'
   gem 'webmock'
