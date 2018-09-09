@@ -1,13 +1,8 @@
-# next.nihongo-chushin.com
-このプロジェクトは nihongo-chushin.com をRails に置き換えるためのものです。
-
-全機能の置き換えは考えておらず、ひとまず最低限のチャットができるようになることが目標です。
-
-- https://nihongo-chushin.com
-- https://next.nihongo-chushin.com
+# www.nihongo-chushin.com
+- https://www.nihongo-chushin.com
 
 ## Rails version
-- 5.2.1
+- 5.2.0
 
 ## Ruby version
 - 2.5.1
@@ -41,5 +36,16 @@ DBスキーマ反映用にタスクを作成しているので
 bundle exec rails db:ridgepole
 ```
 で反映されます。
+
+## yarnでjsファイルをダウンロード
+```
+yarn install
+```
+
+## railsの起動
+```
+bundle exec rails s
+```
+
 
 ## Other settings
