@@ -1,0 +1,41 @@
+{
+  "name": "Nihongo中心",
+  "description": "https://www.nihongo-chushin.com/",
+  "scripts": {
+    "postdeploy": "bundle exec rails db:migrate db:seed"
+  },
+  "env": {
+    "LANG": "ja_JP.UTF-8",
+    "RAILS_SERVE_STATIC_FILES": "true",
+    "RAILS_ENV": "review_app",
+    "RACK_ENV": "review_app",
+    "BASIC_AUTH_NAME": "n",
+    "BASIC_AUTH_PASSWORD": "n",
+    "TZ": "Asia/Tokyo",
+    "DEPLOY_TASKS": "db:migrate",
+    "SECRET_KEY_BASE": {
+      "generator": "secret"
+    },
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_PARENT_APP_NAME": {
+      "required": true
+    }
+  },
+  "addons": [
+    "heroku-postgresql",
+    "rediscloud"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-ruby"
+    },
+    {
+      "url": "https://github.com/gunpowderlabs/buildpack-ruby-rake-deploy-tasks"
+    }
+  ]
+}

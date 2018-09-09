@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.1'
+gem 'rails', '5.2.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -51,11 +51,11 @@ gem 'dotenv-rails'
 gem 'enumerize', github: 'brainspec/enumerize'
 gem 'kaminari'
 gem 'rack-user_agent'
-gem 'ransack'
+gem 'ransack', '1.8.8'
 gem 'ridgepole'
-gem 'scaffoldable', github: 'radicodeinc/scaffoldable', branch: 'rails_5_2_1#11'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'acts_as_paranoid', '~> 0.6.0'
 # sidekiq
 # gem 'sidekiq'
 # gem 'sidekiq-failures'
@@ -66,7 +66,7 @@ gem 'slim-rails'
 gem 'newrelic_rpm'
 gem 'redis-namespace'
 gem 'redis-rails'
-gem 'semantic-ui-sass', git: 'https://github.com/doabit/semantic-ui-sass.git'
+gem 'scaffoldable', git: 'https://github.com/radicodeinc/scaffoldable.git'
 
 group :test, :development do
   gem 'better_errors'
@@ -92,7 +92,7 @@ group :test, :development do
   gem 'selenium-webdriver'
 end
 
-group :development, :staging, :staging_heroku do
+group :development, :staging, :review_app do
   gem 'letter_opener'
   gem 'letter_opener_web'
 end

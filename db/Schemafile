@@ -1,3 +1,7 @@
 require 'schema/active_storage_attachments.rb'
 require 'schema/active_storage_blobs.rb'
+require 'schema/chats.rb'
+require 'schema/premium_users.rb'
+require 'schema/rooms.rb'
 require 'schema/samples.rb'
+require 'schema/users.rb'

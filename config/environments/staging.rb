@@ -93,6 +93,11 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.session_store :redis_store, servers: ENV["REDISCLOUD_URL"], expire_in: 30.days
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.site_name = "Nihongo中心"
+  config.site_url = "staging-www.nihongo-chushin.com"
 end

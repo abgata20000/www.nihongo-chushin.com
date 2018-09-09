@@ -12,10 +12,11 @@ Rails.application.routes.draw do
   # end
   # mount Sidekiq::Web => '/my-sidekiq'
 
-  root to: 'static_pages#top'
+  root to: "static_pages#top"
+  get "vue_sample" => "static_pages#vue_sample"
   resources :samples
   #
-  # draw :apis
+  # draw :api
   # draw :admins
 end
 

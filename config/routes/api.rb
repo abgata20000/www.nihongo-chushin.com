@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-namespace :apis do
+namespace :api do
 end

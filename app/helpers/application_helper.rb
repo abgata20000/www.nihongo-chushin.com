@@ -1,6 +1,47 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def controller_and_action_classes
+    "#{controller_path.tr('/', ' ')} #{action_name}"
+  end
+
+  def controller_classes
+    controller_path.tr("/", " ")
+  end
+
+  def head_title
+    if content_for? :page_title
+      "#{content_for(:page_title)} | #{Rails.application.config.site_name}"
+    else
+      Rails.application.config.site_name
+    end
+  end
+
+  def model_column_t(model, column_name)
+    t("activerecord.attributes.#{model.model_name.collection.singularize}.#{column_name}")
+  end
+
+  def javascript_void
+    "javascript:void(0)"
+  end
+
+  def error_messages(resource)
+    resource.errors.full_messages
+  end
+
+  def safe_to_date(datetime)
+    datetime.nil? ? nil : datetime.to_date
+  end
+
+  def safe_to_date_l(datetime)
+    date = safe_to_date(datetime)
+    date.nil? ? nil : l(date)
+  end
+
+  def decorate(model_instance)
+    ActiveDecorator::Decorator.instance.decorate(model_instance)
+  end
+
   def today
     Time.zone.today
   end
@@ -14,10 +55,6 @@ module ApplicationHelper
     Digest::SHA1.hexdigest(value)
   end
 
-  def decorate(object)
-    ActiveDecorator::Decorator.instance.decorate(object)
-  end
-
   # rubocop:disable Rails/OutputSafety
   def nl2br(text)
     ERB::Util.html_escape(text).gsub(/\r\n|\r|\n/, "<br />").html_safe
@@ -26,10 +63,6 @@ module ApplicationHelper
 
   def array_to_collection(values)
     values.map { |value| [value, value] }
-  end
-
-  def controller_classes
-    "#{controller_path.tr('/', ' ')} #{action_name}"
   end
 
   def h(text)

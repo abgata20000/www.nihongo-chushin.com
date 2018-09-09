@@ -93,6 +93,14 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.session_store :redis_store, servers: ENV["REDISCLOUD_URL"], expire_in: 30.days
+  config.action_mailer.delivery_method = :letter_opener_web
+  config.action_mailer.default_url_options = { host: "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com" }
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+
+  config.site_name = "Nihongo中心"
+  config.site_url = "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
 end

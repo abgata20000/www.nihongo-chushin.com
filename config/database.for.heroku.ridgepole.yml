@@ -1,7 +1,7 @@
 staging:
   url: <%= ENV['DATABASE_URL'] %>
 
-staging_heroku:
+review_app:
   url: <%= ENV['DATABASE_URL'] %>
 
 production:
