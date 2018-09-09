@@ -96,3 +96,6 @@ Layout/EmptyLineAfterMagicComment:
 
 Rails:
   Enabled: true
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false

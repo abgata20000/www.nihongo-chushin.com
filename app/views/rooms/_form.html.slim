@@ -1,0 +1,20 @@
+.ui.middle.aligned.center.aligned.grid
+  .column
+    = simple_form_for(@room, html: {class: 'ui large form'}) do |f|
+      .field
+        = f.input :name, label: false, placeholder: I18n.t(:room_name), error: false
+      .field
+        = f.input :num, label: false, error: false
+      - if @room.new_record?
+        .field
+          = f.input :password, label: false, error: false, placeholder: 'input password if you want'
+
+      button.ui.fluid.huge.teal.submit.button(type="submit")
+        - if @room.new_record?
+          = I18n.t(:create)
+        - else
+          = I18n.t(:update)
+    - if @room.errors.present?
+      .ui.error.message
+        - @room.errors.full_messages.each do |error|
+          p = error

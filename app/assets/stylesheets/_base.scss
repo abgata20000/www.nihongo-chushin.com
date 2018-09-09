@@ -1,0 +1,80 @@
+/*=========================================
+Base
+======================================== */
+html {
+  font-size: $font_size_html;
+}
+
+body {
+  width: 100%;
+  font-size: $font_size_base;
+  background-color: $bg_color;
+  font-weight: $font_weight_base;
+  color: $text_color;
+  font-family: $text_font;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $heading_font;
+  font-weight: $font_weight_base;
+  margin-top: 0;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: $font_weight_semibold;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+a {
+  color: $link_color;
+  text-decoration: none;
+  &:hover, &:active, &:focus {
+    text-decoration: none;
+  }
+}
+
+input, textarea {
+  font-size: $input_font_size;
+}
+
+input {
+  font-weight: $font_weight_light;
+  max-width: 100%;
+  outline: none;
+  transition: border .12s ease-in-out;
+  &:focus {
+    border: 1px solid $brand_color01;
+  }
+}
+
+input[disabled] {
+  background-color: #ddd;
+}
+
+.container {
+  @include max_width_container;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

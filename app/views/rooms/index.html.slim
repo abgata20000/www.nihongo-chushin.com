@@ -1,0 +1,8 @@
+- if current_user.room
+  = link_to I18n.t(:room), room_path(current_user.room), class: 'ui fluid huge blue submit button'
+- else
+  = link_to I18n.t(:new_for, name: I18n.t(:room)), new_room_path, class: 'ui fluid huge blue submit button'
+
+
+- @rooms.each do |room|
+  = render 'room', room: room

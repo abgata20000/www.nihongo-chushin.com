@@ -1,0 +1,28 @@
+.icon {
+  border: solid 3px #333;
+  margin: 3px;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;
+  display: inline-block;
+
+  img {
+    width: 64px;
+    height: 64px;
+  }
+
+  &.selected {
+    border: solid 3px red;
+  }
+  
+  &.secret {
+    display: none;
+  }
+}
+
+.secret_show_block {
+  margin-top: 10px;
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+}

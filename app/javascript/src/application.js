@@ -9,3 +9,7 @@ Rails.start();
 
 // router
 import router from './common/router';
+// semantic_ui
+import Vue from 'vue';
+import SuiVue from 'semantic-ui-vue';
+Vue.use(SuiVue);
