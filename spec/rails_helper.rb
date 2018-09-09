@@ -109,25 +109,26 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = true
 
 
-  # bullet(N+1問題)でチェック
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
     FactoryBot.reload
     DatabaseCleaner.start
-    Bullet.start_request if Bullet.enable?
   end
 
   config.after(:each) do
     DatabaseCleaner.clean
-    if Bullet.enable?
-      Bullet.perform_out_of_channel_notifications if Bullet.notification?
-      Bullet.end_request
-    end
   end
 
   # Active Storageのテスト後、ファイル削除
   config.after(:each) do
     FileUtils.rm_rf("#{Rails.root}/tmp/storage")
+  end
+
+  # vcr
+  VCR.configure do |c|
+    c.cassette_library_dir = 'spec/vcr'
+    c.hook_into :webmock
+    c.allow_http_connections_when_no_cassette = false
   end
 
   config.include MailerMacros
