@@ -4,6 +4,13 @@ class Room < ApplicationRecord
       enabled_colors.sample
     end
 
+    def exists_username?(my_user)
+      nicknames = users.pluck(:nickname).map do |name|
+        name.strip.downcase
+      end
+      nicknames.include?(my_user.nickname.downcase)
+    end
+
     private
 
     def used_colors
