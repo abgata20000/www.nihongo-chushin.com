@@ -30,9 +30,6 @@ jobs:
       # Restore cache
       - restore_cache:
           keys:
-            - phantomjs-2.1.1
-      - restore_cache:
-          keys:
             - google-chrome
       - restore_cache:
           keys:
@@ -40,7 +37,6 @@ jobs:
             - gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-
 
       # install packages
-      - run: sudo su
       - run: sudo apt-get update
       - run: sudo apt-get install -y libmcrypt-dev fonts-migmix
 
@@ -53,6 +49,7 @@ jobs:
       - run:
           name: Install Chrome
           command: |
+            which google-chrome && exit
             sudo apt-get install -y libappindicator3-1 libappindicator1 libnss3 fonts-liberation libasound2 libxss1 lsb-release xdg-utils
             curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             sudo dpkg -i google-chrome.deb
@@ -69,10 +66,6 @@ jobs:
           key: google-chrome
           paths:
             - /opt/google/chrome/google-chrome
-      - save_cache:
-          key: phantomjs-2.1.1
-          paths:
-            - /usr/local/bin/phantomjs
       - save_cache:
           key: gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "Gemfile.lock" }}
           paths:
