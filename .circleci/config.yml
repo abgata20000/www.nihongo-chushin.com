@@ -40,6 +40,7 @@ jobs:
             - gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-
 
       # install packages
+      - run: sudo su
       - run: sudo apt-get update
       - run: sudo apt-get install -y libmcrypt-dev fonts-migmix
 
