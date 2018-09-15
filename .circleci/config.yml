@@ -9,6 +9,7 @@ references:
 version: 2
 jobs:
   build_and_test:
+    working_directory: ~/my_project
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
         environment:
@@ -48,7 +49,7 @@ jobs:
       - run: yarn install
 
       # Store cache
-      - run: sudo chmod -R 777 root
+      - run: sudo chmod -R 777 ~/my_project
       - save_cache:
           key: gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "Gemfile.lock" }}
           paths:
