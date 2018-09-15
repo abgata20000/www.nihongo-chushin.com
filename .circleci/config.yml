@@ -1,6 +1,6 @@
 references:
   ruby_image: &ruby_image
-    ruby:2.5.1-node-browsers
+    ruby:2.5.1
 
   job_base_environment:
     - &job_base_environment
@@ -10,7 +10,7 @@ version: 2
 jobs:
   build_and_test:
     docker:
-      - image: *ruby_image
+      - image: circleci/ruby:2.5.1-node-browsers
         environment:
           - LANG: ja_JP.UTF-8
           - LANGUAGE: ja_JP.UTF-8
@@ -38,6 +38,11 @@ jobs:
             - bootsnap-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ .Branch }}-{{ .Revision }}
             - bootsnap-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ .Branch }}
             - bootsnap-cache-{{ .Environment.COMMON_CACHE_KEY }}
+
+      - restore_cache:
+        name: Restore Yarn Package Cache
+        keys:
+          - yarn-packages-{{ checksum "yarn.lock" }}
 
       - run: apt-get update
       - run: apt-get install -y mcrypt libmcrypt-dev
@@ -79,6 +84,11 @@ jobs:
           key: gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-
           paths:
             - vendor/bundle
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       # DB setup
       - run: mv config/database.ci.yml config/database.yml
       - shell:
