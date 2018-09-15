@@ -5,9 +5,10 @@ module ControllerMacros
     ActionMailer::Base.deliveries.last
   end
 
-  def login_user(user = create(:user))
-    @request.env["devise.mapping"] = Devise.mappings[:user]
-    @logined_admin = user
-    sign_in user
+  def visit_user(user = create(:user))
+    cookies.signed[:user_token] = {
+      value: user.token,
+      expires: 10.years.from_now
+    }
   end
 end
