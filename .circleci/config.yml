@@ -38,6 +38,16 @@ jobs:
           which phantomjs && exit
           curl --location --silent https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 | tar xj -C /tmp --strip-components=1
           sudo mv /tmp/bin/phantomjs /usr/local/bin/phantomjs
+      # Install chrome
+      - run:
+          name: Install Chrome
+          command: |
+            which google-chrome && exit
+            sudo apt-get install -y libappindicator3-1 libappindicator1 libnss3 fonts-liberation libasound2 libxss1 lsb-release xdg-utils
+            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            sudo dpkg -i google-chrome.deb
+            sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+            rm google-chrome.deb
 
       # Bundle install dependencies
       - run: bundle install -j 4 --path vendor/bundle
@@ -63,40 +73,9 @@ jobs:
             bundle exec rails db:create db:ridgepole --trace
 
       - run:
-          name: assetsキャッシュのキーとなるファイル生成
-          command: |
-            git rev-parse $(git log --oneline -n 1 app/assets | awk '{{print $1}}')  > tmp/app-assets-revision
-            cat tmp/app-assets-revision
-      - restore_cache:
-          name: Restoring Cache - assets:precompile
-          keys:
-            - assets-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "tmp/app-assets-revision" }}
-            - assets-{{ .Environment.COMMON_CACHE_KEY }}-
-      - run:
           name: assets:precompile
           command: |
-            current_assets_revision_file=tmp/app-assets-revision
-            before_assets_revision_file=public/assets/app-assets-revision
-
-            # assets:precompile対象のファイルが更新されていなければキャッシュをそのまま使う
-            if [ ! -e $before_assets_revision_file ] || [ ! -e $before_frontend_revision_file ] || \
-              ! diff $before_assets_revision_file $current_assets_revision_file
-            then
-              bundle exec rails assets:precompile
-
-              # Revisionファイルを更新
-              cp -f $current_assets_revision_file $before_assets_revision_file
-            else
-              echo "Skipped."
-            fi
-
-      - save_cache:
-          name: Saving Cache - assets:precompile
-          key: assets-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "tmp/app-assets-revision" }}
-          paths:
-            - tmp/cache/assets
-            - public/assets
-
+            bundle exec rails assets:precompile
       # Run rspec in parallel
       - shell:
           command: |

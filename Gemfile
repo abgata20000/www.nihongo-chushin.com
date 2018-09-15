@@ -69,28 +69,32 @@ gem 'redis-rails'
 gem 'scaffoldable', git: 'https://github.com/radicodeinc/scaffoldable.git'
 
 group :test, :development do
-  gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
   gem 'brakeman'
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
   gem 'database_cleaner', '~> 1.3.0'
   gem 'database_rewinder'
   gem 'delorean'
-  gem 'factory_bot_rails'
-  gem 'faker', '~> 1.4.3'
-  gem 'fakeweb'
   gem 'launchy', '~> 2.4.2'
-  gem 'phantomjs', require: 'phantomjs/poltergeist'
-  gem 'poltergeist'
+  gem 'pry'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'pry-remote'
   gem 'rails-controller-testing'
-  gem 'rspec-json_matcher'
   gem 'rspec-rails'
-  gem 'rspec-retry'
   gem 'rspec_junit_formatter', '0.2.2' # for circleci
   gem 'rubocop'
+  gem 'meowcop'
   gem 'selenium-webdriver', '~> 3.4.1'
+  gem 'simplecov'
   gem 'chromedriver-helper'
+  gem 'rspec-retry'
+  gem 'timecop'
 end
 
 group :development, :staging, :review_app do
@@ -114,12 +118,15 @@ group :development do
   gem 'view_source_map'
 end
 
-group :test do
-  gem 'mock_redis'
-  gem 'simplecov'
-  gem 'timecop'
-  gem 'vcr'
-  gem 'webmock'
-  gem 'therubyracer'
-  gem 'rspec-retry'
+group :test, :development, :staging, :review_app do
+  gem 'gimei'
+  gem 'takarabako'
+end
+
+group :production, :staging , :development do
+  gem 'sendgrid-actionmailer'
+end
+
+group :review_app, :staging , :development do
+  gem 'better_errors'
 end

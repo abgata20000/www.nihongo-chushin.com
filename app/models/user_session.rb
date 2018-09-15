@@ -5,6 +5,7 @@ class UserSession < ActiveType::Object
   attribute :icon, :string
   attribute :color, :string
   attribute :sound, :string
+  attribute :room_id, :integer
 
   default_value_for :color do
     User::DEFAULT_COLOR
@@ -17,7 +18,7 @@ class UserSession < ActiveType::Object
   end
 
   validates :user, presence: true
-  validates :nickname, presence: true, length: { in: 2..10 }
+  validates :nickname, presence: true, length: { in: 2..20 }
   validates :color, presence: true
   validates :icon, presence: true
   validates :sound, presence: true

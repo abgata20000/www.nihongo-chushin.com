@@ -54,4 +54,10 @@ class ApplicationController < ActionController::Base
   def set_request_variant
     request.variant = request.device_variant
   end
+
+  def check_room_owner
+    return if current_user.room_owner?
+
+    redirect_to room_path(current_user.room), notice: "管理者権限がありません"
+  end
 end

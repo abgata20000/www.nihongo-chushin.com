@@ -1,23 +1,13 @@
 class RoomsController < ApplicationController
-  before_action :logged_in_check, except: %w[index]
-  before_action :find_room, only: %w[show edit update users ban_user join]
-  before_action :check_password, only: %w[join]
+  before_action :check_room_owner, only: %w[edit update]
+  before_action :find_room, only: %w[show edit update]
   before_action :set_room, only: %w[new create]
-  before_action :check_exists_username, only: %w[join]
-  before_action :check_room_max, only: %w[join]
-  before_action :set_room_id_to_current_user, only: %w[join]
-  before_action :check_current_room, only: %w[show edit update new create ban_user users]
-  before_action :check_room_owner, only: %w[edit update ban_user]
 
   def index
     @rooms = Room.active_rooms
   end
 
   def show; end
-
-  def join
-    redirect_to room_path(current_user.room)
-  end
 
   def new; end
 
@@ -39,53 +29,10 @@ class RoomsController < ApplicationController
     end
   end
 
-  def leave
-    if current_user.room
-      current_user.leave_the_room_system_comment
-      current_user.leave_room
-    end
-    redirect_to rooms_path
-  end
-
-  def users
-    @users = @room.users
-  end
-
-  def ban_user
-    ban_or_drive_out_user(true)
-  end
-
-  def drive_out_user
-    ban_or_drive_out_user(false)
-  end
-
-  def owner_transfer
-    user_id = params[:user_id]
-    to_user = User.find(user_id)
-    current_user.room.owner_transfer(to_user) if current_user.room_owner?
-    redirect_to room_path(current_user.room)
-  rescue StandardError => _e
-    redirect_to room_path(current_user.room)
-  end
-
   private
 
   def id
     params[:room_id] || params[:id]
-  end
-
-  def check_password
-    return if @room.password.blank?
-    return if @room.password == params[:password]
-
-    redirect_to new_room_room_password_path(room_id: @room.id)
-  end
-
-  def set_room_id_to_current_user
-    return if current_user.room.present?
-
-    current_user.into_the_room(@room)
-    current_user.into_the_room_system_comment
   end
 
   def set_room
@@ -102,43 +49,5 @@ class RoomsController < ApplicationController
 
   def controller_params
     params.fetch(:room, {}).permit(:name, :num, :password)
-  end
-
-  def check_current_room
-    return if current_user.room_id == @room.id
-
-    redirect_to rooms_path
-  end
-
-  def check_room_max
-    return if current_user.room_id == @room.id
-    return unless @room.max?
-
-    redirect_to rooms_path, notice: "満室です。"
-  end
-
-  def check_room_owner
-    return if current_user.room_owner?
-
-    redirect_to room_path(current_user.room), notice: "管理者権限がありません"
-  end
-
-  def check_exists_username
-    return unless @room.exists_username?(current_user)
-
-    redirect_to rooms_path, notice: "同じ部屋で同じ名前は利用できません"
-  end
-
-  def ban_or_drive_out_user(force_ban = false)
-    user_id = params[:user_id]
-    user = User.find(user_id)
-    if force_ban
-      user.ban!
-    else
-      user.drive_out!
-    end
-    redirect_to room_path(current_user.room)
-  rescue StandardError => _e
-    redirect_to room_path(current_user.room)
   end
 end
