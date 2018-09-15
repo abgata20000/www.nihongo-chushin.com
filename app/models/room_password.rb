@@ -14,6 +14,7 @@ class RoomPassword < ActiveType::Object
   def check_password
     return if room.password.blank?
     return if password == room.password
+
     errors.add(:password, :password_is_incorrect)
   end
 end

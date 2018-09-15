@@ -1,23 +1,22 @@
 require "rails_helper"
 require "capybara/rspec"
-require "capybara/poltergeist"
 
 Dir[Rails.root.join("spec", "features", "support", "**", "*.rb")].each { |f| require f }
 
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app,
-                                    js_errors: false,
-                                    timeout: 1000,
-                                    phantomjs_options: [
-                                      "--load-images=no",
-                                      "--ignore-ssl-errors=yes",
-                                      "--ssl-protocol=any"
-                                    ])
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
+      chrome_options: {
+        args: %w[headless disable-gpu window-size=1920,1200 no-sandbox]
+      }
+    )
+  )
 end
+Capybara.javascript_driver = :chrome
 
-Capybara.javascript_driver = :poltergeist
-
-Capybara.default_wait_time = 15
+Capybara.default_max_wait_time = 15
 
 shared_context "seed_data" do
   before(:all) do

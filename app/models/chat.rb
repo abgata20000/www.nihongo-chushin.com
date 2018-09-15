@@ -14,6 +14,7 @@ class Chat < ApplicationRecord
 
   def set_user_attributes
     return if user.blank?
+
     self.nickname = user.nickname
     self.color = user.color
     self.icon = user.icon

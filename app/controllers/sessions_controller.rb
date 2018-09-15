@@ -32,6 +32,7 @@ class SessionsController < ApplicationController
 
   def redirect_to_root_with_logged_in
     return unless logged_in?
+
     redirect_to root_path
   end
 end

@@ -77,11 +77,13 @@ class RoomsController < ApplicationController
   def check_password
     return if @room.password.blank?
     return if @room.password == params[:password]
+
     redirect_to new_room_room_password_path(room_id: @room.id)
   end
 
   def set_room_id_to_current_user
     return if current_user.room.present?
+
     current_user.into_the_room(@room)
     current_user.into_the_room_system_comment
   end
@@ -104,22 +106,26 @@ class RoomsController < ApplicationController
 
   def check_current_room
     return if current_user.room_id == @room.id
+
     redirect_to rooms_path
   end
 
   def check_room_max
     return if current_user.room_id == @room.id
     return unless @room.max?
+
     redirect_to rooms_path, notice: "満室です。"
   end
 
   def check_room_owner
     return if current_user.room_owner?
+
     redirect_to room_path(current_user.room), notice: "管理者権限がありません"
   end
 
   def check_exists_username
     return unless @room.exists_username?(current_user)
+
     redirect_to rooms_path, notice: "同じ部屋で同じ名前は利用できません"
   end
 

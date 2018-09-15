@@ -3,6 +3,7 @@
 module SessionsHelper
   def current_user
     return @current_user if @current_user
+
     @current_user = User.find_by(token: user_token)
     @current_user = User.create! if @current_user.blank?
     # セッションの有効期限を更新(永続的に利用させたい)
