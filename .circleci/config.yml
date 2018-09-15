@@ -29,20 +29,20 @@ jobs:
       - run: sudo apt-get install -y mcrypt libmcrypt-dev
 
       # Install phantomjs
-      - run: apt-get install -y fonts-migmix
+      - run: sudo apt-get install -y fonts-migmix
       - run: |
           which phantomjs && exit
-          sudo curl --location --silent https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 | tar xj -C /tmp --strip-components=1
-          sudo mv /tmp/bin/phantomjs /usr/local/bin/phantomjs
+          curl --location --silent https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 | tar xj -C /tmp --strip-components=1
+          mv /tmp/bin/phantomjs /usr/local/bin/phantomjs
 
       - run:
           name: Install Chrome
           command: |
             sudo apt-get install -y libappindicator3-1 libappindicator1 libnss3 fonts-liberation libasound2 libxss1 lsb-release xdg-utils
-            sudo curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
             sudo dpkg -i google-chrome.deb
             sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
-            sudo rm google-chrome.deb
+            rm google-chrome.deb
 
       # Bundle install dependencies
       - run: bundle install -j 4 --path vendor/bundle
