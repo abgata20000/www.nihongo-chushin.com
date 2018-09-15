@@ -41,7 +41,7 @@ jobs:
             - bootsnap-cache-{{ .Environment.COMMON_CACHE_KEY }}
 
       - run: apt-get update
-      - run: apt-get install -y mcrypt libmcrypt-dev
+      - run: apt-get install -y mcrypt libmcrypt-dev yarn
 
       # Install phantomjs
       - run: apt-get install -y fonts-migmix
