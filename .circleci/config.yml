@@ -80,7 +80,7 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               exit 0
             fi
-            bundle exec rails db:create db:migrate --trace
+            bundle exec rails db:create db:ridgepole --trace
 
       - run:
           name: assetsキャッシュのキーとなるファイル生成
