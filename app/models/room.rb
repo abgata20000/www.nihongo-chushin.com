@@ -28,4 +28,8 @@ class Room < ApplicationRecord
       includes(:users).enabled.order(is_fixed: :desc).newest.limit(LIMIT_NUM)
     end
   end
+
+  def max?
+    num <= users.size
+  end
 end

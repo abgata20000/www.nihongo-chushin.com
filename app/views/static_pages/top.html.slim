@@ -2,3 +2,6 @@
 p= link_to "サンプルページ", samples_path
 
 
+ul
+  - @rooms.each do |room|
+    li= room.name

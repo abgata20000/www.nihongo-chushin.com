@@ -1,6 +1,4 @@
-class Icon < ActiveHash::Base
-  include SupportActiveHash
-
+class Icon < ApplicationHash
   field :name
   field :secret
   field :special

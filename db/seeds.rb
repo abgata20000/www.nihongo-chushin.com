@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # 順番を指定して読み込みたいファイルを指定
-seed_files = []
+seed_files = ["user.rb"]
 
 # seedsフォルダを検索して実行するファイルを追加
 Dir.glob(File.join(Rails.root, 'db', 'seeds', '*.rb')) do |file|

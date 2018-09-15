@@ -1,6 +1,4 @@
-class Language < ActiveHash::Base
-  include SupportActiveHash
-
+class Language < ApplicationHash
   field :name
 
   create(id: 1, name: "ja")

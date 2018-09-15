@@ -3,12 +3,13 @@
     = simple_form_for(@user_session, url: {action: :create}, html: {class: 'ui large form'}) do |f|
       .field
         = f.input :nickname, label: false, placeholder: I18n.t(:username), error: false
+      button.ui.fluid.huge.teal.submit.button(type="submit")
+        = I18n.t(:login)
       .field
-        = render 'icons'
+        = render 'icons', icons: @icons
         = f.input :icon, as: :hidden, error: false, input_html: {"v-model" => "icon"}
       .field
         = f.input :sound, as: :hidden, error: false
-
       button.ui.fluid.huge.teal.submit.button(type="submit")
         = I18n.t(:login)
     - if @user_session.errors.present?
