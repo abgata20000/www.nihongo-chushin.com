@@ -40,9 +40,9 @@ jobs:
             - bootsnap-cache-{{ .Environment.COMMON_CACHE_KEY }}
 
       - restore_cache:
-        name: Restore Yarn Package Cache
-        keys:
-          - yarn-packages-{{ checksum "yarn.lock" }}
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
 
       - run: apt-get update
       - run: apt-get install -y mcrypt libmcrypt-dev
