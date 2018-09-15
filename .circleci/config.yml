@@ -1,6 +1,6 @@
 references:
   ruby_image: &ruby_image
-    ruby:2.5.0
+    ruby:2.5.1
 
   job_base_environment:
     - &job_base_environment
