@@ -1,4 +1,5 @@
 class RoomsController < ApplicationController
+  before_action :check_room_owner, only: %w[edit update]
   before_action :find_room, only: %w[show edit update]
   before_action :set_room, only: %w[new create]
 
