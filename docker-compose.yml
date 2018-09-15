@@ -1,0 +1,55 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7.22
+    volumes:
+      - mysql_data:/var/lib/mysql:delegated
+    environment:
+      TZ: Asia/Tokyo
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "6603:3306"
+    healthcheck:
+      test: "mysqladmin ping -u root"
+      interval: 3s
+      timeout: 1s
+      retries: 5
+  web: &app_base
+    build:
+      context: .
+      dockerfile: "Dockerfile.dev"
+    image: web_image
+    command: /bin/bash -c "rm -rf tmp/pids/server.pid && ./script/wait-for-mysql.sh && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    env_file:
+      - "./.env.docker.dev"
+    volumes:
+      - .:/myapp:cached
+      - bundle:/usr/local/bundle:delegated
+      - node_modules:/myapp/node_modules:delegated
+      # exclude volumes
+      - /myapp/vendor
+      - /myapp/log
+    ports:
+      - "3001:3000"
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      WEBPACKER_DEV_SERVER_HOST: webpack
+  webpack:
+    <<: *app_base
+    command: "bin/webpack-dev-server"
+    ports:
+      - "3035:3035"
+    depends_on:
+      - web
+    tty: false
+    stdin_open: false
+volumes:
+  mysql_data:
+  bundle:
+  node_modules:
+

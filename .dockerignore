@@ -1,0 +1,5 @@
+/vendor/bundle
+.circleci
+.github
+.idea
+.bundle

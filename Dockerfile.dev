@@ -1,0 +1,18 @@
+FROM abgata20000/docker-ubuntu
+MAINTAINER abgata@abgata.jp
+
+WORKDIR /tmp
+RUN echo PATH
+
+WORKDIR /myapp
+ENV BUNDLE_JOBS=32 \
+    BUNDLE_WITHOUT='production:staging'
+
+COPY Gemfile Gemfile.lock /myapp/
+RUN bundle install
+
+COPY package.json yarn.lock /myapp/
+RUN yarn install
+
+COPY . /myapp
+
