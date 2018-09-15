@@ -3,7 +3,7 @@ class Icon < ApplicationHash
   field :secret
   field :special
 
-  168.times do |i|
+  150.times do |i|
     id = i + 1
     create(name: "icon_#{id}", secret: false, special: false)
   end
