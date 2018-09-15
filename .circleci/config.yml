@@ -25,22 +25,6 @@ jobs:
     parallelism: 1
     steps:
       - checkout
-
-      - restore_cache:
-          keys:
-            - gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "Gemfile.lock" }}
-            - gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-
-      - restore_cache:
-          keys:
-            - bootsnap-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ .Branch }}-{{ .Revision }}
-            - bootsnap-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ .Branch }}
-            - bootsnap-cache-{{ .Environment.COMMON_CACHE_KEY }}
-
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-
       - run: apt-get update
       - run: apt-get install -y mcrypt libmcrypt-dev
 
@@ -64,28 +48,6 @@ jobs:
       - run: bundle install -j 4 --path vendor/bundle
       - run: yarn install
 
-      # Store cache
-      - save_cache:
-          key: google-chrome
-          paths:
-            - /opt/google/chrome/google-chrome
-      - save_cache:
-          key: phantomjs-2.1.1
-          paths:
-            - /usr/local/bin/phantomjs
-      - save_cache:
-          key: gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
-      - save_cache:
-          key: gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-
-          paths:
-            - vendor/bundle
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
       # DB setup
       - run: mv config/database.ci.yml config/database.yml
       - shell:
