@@ -13,7 +13,9 @@
           = render 'user', user: user
 
   .extra.content
-    - if current_user.room.blank?
+    - if !logged_in?
+      = link_to I18n.t(:join_chat_with_login), signin_path(room_id: room.id), class: 'ui fluid huge blue submit button'
+    - elsif current_user.room.blank?
       - if room.max?
         .ui.button.fluid.huge.submit
           = I18n.t(:full_of_room)

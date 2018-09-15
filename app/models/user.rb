@@ -61,6 +61,10 @@ class User < ApplicationRecord
     )
   end
 
+  def room_owner?
+    room && room.user_id == id
+  end
+
   private
 
   def generate_token
