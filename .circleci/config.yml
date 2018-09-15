@@ -61,6 +61,7 @@ jobs:
 
       # Bundle install dependencies
       - run: bundle install -j 4 --path vendor/bundle
+      - run: yarn install
 
       # Store cache
       - save_cache:
