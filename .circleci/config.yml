@@ -18,6 +18,8 @@ jobs:
           - RAILS_ENV: test
           - RUBYOPT: --encoding=UTF-8
       - image: circleci/postgres
+        environment:
+          POSTGRES_USER: root
 
     environment:
       <<: *job_base_environment
