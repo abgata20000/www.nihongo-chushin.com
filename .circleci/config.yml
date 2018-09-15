@@ -1,0 +1,198 @@
+references:
+  ruby_image: &ruby_image
+    ruby:2.5.1
+
+  job_base_environment:
+    - &job_base_environment
+      TZ: "/usr/share/zoneinfo/Asia/Tokyo"
+
+version: 2
+jobs:
+  build_and_test:
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+        environment:
+          - LANG: ja_JP.UTF-8
+          - LANGUAGE: ja_JP.UTF-8
+          - RAILS_ENV: test
+          - RUBYOPT: --encoding=UTF-8
+      - image: circleci/postgres
+        environment:
+          POSTGRES_USER: root
+
+    environment:
+      <<: *job_base_environment
+    parallelism: 1
+    steps:
+      - checkout
+
+
+      # Restore cache
+
+      # install packages
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y libmcrypt-dev fonts-migmix
+
+      # Install phantomjs
+      - run: |
+          which phantomjs && exit
+          curl --location --silent https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 | tar xj -C /tmp --strip-components=1
+          sudo mv /tmp/bin/phantomjs /usr/local/bin/phantomjs
+
+      # Bundle install dependencies
+      - run: bundle install -j 4 --path vendor/bundle
+      - run: yarn install
+
+      # Store cache
+      - save_cache:
+          key: gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - save_cache:
+          key: gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-
+          paths:
+            - vendor/bundle
+
+      # DB setup
+      - run: mv config/database.ci.yml config/database.yml
+      - shell:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              exit 0
+            fi
+            bundle exec rails db:create db:ridgepole --trace
+
+      - run:
+          name: assetsキャッシュのキーとなるファイル生成
+          command: |
+            git rev-parse $(git log --oneline -n 1 app/assets | awk '{{print $1}}')  > tmp/app-assets-revision
+            cat tmp/app-assets-revision
+      - restore_cache:
+          name: Restoring Cache - assets:precompile
+          keys:
+            - assets-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "tmp/app-assets-revision" }}
+            - assets-{{ .Environment.COMMON_CACHE_KEY }}-
+      - run:
+          name: assets:precompile
+          command: |
+            current_assets_revision_file=tmp/app-assets-revision
+            before_assets_revision_file=public/assets/app-assets-revision
+
+            # assets:precompile対象のファイルが更新されていなければキャッシュをそのまま使う
+            if [ ! -e $before_assets_revision_file ] || [ ! -e $before_frontend_revision_file ] || \
+              ! diff $before_assets_revision_file $current_assets_revision_file
+            then
+              bundle exec rails assets:precompile
+
+              # Revisionファイルを更新
+              cp -f $current_assets_revision_file $before_assets_revision_file
+            else
+              echo "Skipped."
+            fi
+
+      - save_cache:
+          name: Saving Cache - assets:precompile
+          key: assets-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "tmp/app-assets-revision" }}
+          paths:
+            - tmp/cache/assets
+            - public/assets
+
+      # Run rspec in parallel
+      - shell:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              exit 0
+            fi
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test-results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+      - store_artifacts:
+          path: /tmp/capybara/
+          destination: capybara
+
+      # Save artifacts
+      - store_test_results:
+          path: /tmp/test-results
+
+  bundle_update: #bundle update後にPR作成
+    docker:
+      - image: *ruby_image
+
+    environment:
+      <<: *job_base_environment
+
+    parallelism: 1
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "Gemfile.lock" }}
+            - gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-
+
+      - run:
+          name: circleci-bundle-update-pr
+          command: |
+            gem update bundler --no-document
+            gem install circleci-bundle-update-pr
+            bundle config --local path vendor/bundle
+            circleci-bundle-update-pr radibot radibot@radicode.co.jp develop
+
+      - save_cache:
+          key: gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - save_cache:
+          key: gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-
+          paths:
+            - vendor/bundle
+
+  remove_merged_branches: #マージしたブランチを削除していく
+    working_directory: ~/app
+    docker:
+        - image: *ruby_image # gitが入っていればなんでもいい
+
+    environment:
+      <<: *job_base_environment
+
+    parallelism: 1
+    steps:
+        - checkout
+
+        - run:
+            name: Remove merged remote branches
+            command: git branch -r --merged origin/master | grep -v -e origin/master -e origin/develop | sed -e 's% *origin/%%' | xargs --no-run-if-empty -I% git push --delete origin %
+            # デフォルトの/bin/bash -eo pipefailだとマージ済ブランチが1つもない場合にgrepでexit 1されてジョブが失敗するので上書きする
+            shell: /bin/bash
+
+workflows:
+  version: 2
+
+  build:
+    jobs:
+      - build_and_test
+
+  auto_bundle_update:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 0"  # UTC。日曜AM9時に実行予定
+          filters:
+            branches:
+              only: master
+
+    jobs:
+      - bundle_update:
+          context: rails-application
+
+  daily_branch_cleaner:
+    triggers:
+        - schedule:
+            # NOTE: CircleCIはUTCで動いてるのでJSTにしたければ-9時間した時間を書く
+            cron: "0 21 * * *" # JST 4:00
+            filters:
+              branches:
+                only: master
+    jobs:
+        - remove_merged_branches
