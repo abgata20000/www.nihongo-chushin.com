@@ -1,7 +1,7 @@
 module Rooms
   class ApplicationController < ::ApplicationController
     before_action :check_current_room
-    before_action :set_room
+    before_action :find_room
 
     private
 
@@ -13,10 +13,12 @@ module Rooms
       Room
     end
 
-    def set_room
+    def find_room
       return if room_id.blank?
 
-      @room = room_class.find_by(id: room_id)
+      @room = room_class.enabled.find_by(id: room_id)
+    rescue StandardError => _e
+      redirect_to rooms_path
     end
 
     def check_room_owner
