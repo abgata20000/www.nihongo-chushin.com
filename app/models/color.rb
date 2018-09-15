@@ -56,7 +56,7 @@ class Color < ApplicationHash
   create(name: "ffedab", text_color: "#656565", color_code: true)
 
   def color
-    "##{name}" if color_code ? "##{name}" : name
+    color_code ? "##{name}" : name
   end
 
   def color_class(current_user)
