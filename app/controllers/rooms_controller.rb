@@ -15,10 +15,6 @@ class RoomsController < ApplicationController
 
   def show; end
 
-  def join
-    redirect_to room_path(current_user.room)
-  end
-
   def new; end
 
   def create

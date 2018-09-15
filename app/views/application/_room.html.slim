@@ -20,4 +20,4 @@
         .ui.button.fluid.huge.submit
           = I18n.t(:full_of_room)
       - else
-        = link_to I18n.t(:into_the_room), room_join_path(room), class: 'ui button fluid huge submit teal'
+        = link_to I18n.t(:into_the_room), room_joins_path(room_id: room.id), class: 'ui button fluid huge submit teal'

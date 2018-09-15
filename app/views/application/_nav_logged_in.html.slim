@@ -13,7 +13,7 @@
       - if current_user.room_owner?
         = link_to I18n.t(:room_info), edit_room_path(current_user.room), class: 'item'
       .divider
-      = link_to I18n.t(:room_exit), leave_room_path, method: :delete, class: 'item'
+      = link_to I18n.t(:room_exit), room_leaves_path, method: :delete, class: 'item'
     - else
       .divider
       = link_to I18n.t(:logout), sessions_path, method: :delete, class: 'item'

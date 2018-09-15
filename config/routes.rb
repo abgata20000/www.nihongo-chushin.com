@@ -18,15 +18,19 @@ Rails.application.routes.draw do
 
   resource :my_pages, only: %w(show update)
   resource :room, only: %w() do
-    delete 'leave'
+    scope module: :rooms do
+      resource :leaves, only: %w(destroy)
+    end
   end
   resources :rooms, only: %w(new create show index edit update) do
-    get 'join'
-    get 'users'
-    put 'owner_transfer'
-    delete 'ban_user'
-    delete 'drive_out_user'
-    resources :room_passwords, only: %w(new create)
+    scope module: :rooms do
+      resources :users, only: %w(index)
+      resource :joins, only: %w(show)
+      resource :passwords, only: %w(new create)
+      resources :owner_transfers, only: %w(update)
+      resources :ban_users, only: %w(destroy)
+      resources :drive_out_users, only: %w(destroy)
+    end
   end
 
   resources :chats, only: %w(create)
@@ -54,14 +58,15 @@ end
 #                  my_pages GET    /my_pages(.:format)                                                                      my_pages#show
 #                           PATCH  /my_pages(.:format)                                                                      my_pages#update
 #                           PUT    /my_pages(.:format)                                                                      my_pages#update
-#                leave_room DELETE /room/leave(.:format)                                                                    rooms#leave
-#                 room_join GET    /rooms/:room_id/join(.:format)                                                           rooms#join
-#                room_users GET    /rooms/:room_id/users(.:format)                                                          rooms#users
-#       room_owner_transfer PUT    /rooms/:room_id/owner_transfer(.:format)                                                 rooms#owner_transfer
-#             room_ban_user DELETE /rooms/:room_id/ban_user(.:format)                                                       rooms#ban_user
-#       room_drive_out_user DELETE /rooms/:room_id/drive_out_user(.:format)                                                 rooms#drive_out_user
-#       room_room_passwords POST   /rooms/:room_id/room_passwords(.:format)                                                 room_passwords#create
-#    new_room_room_password GET    /rooms/:room_id/room_passwords/new(.:format)                                             room_passwords#new
+#               room_leaves DELETE /room/leaves(.:format)                                                                   rooms/leaves#destroy
+#                room_users GET    /rooms/:room_id/users(.:format)                                                          rooms/users#index
+#                room_joins GET    /rooms/:room_id/joins(.:format)                                                          rooms/joins#show
+#        new_room_passwords GET    /rooms/:room_id/passwords/new(.:format)                                                  rooms/passwords#new
+#            room_passwords POST   /rooms/:room_id/passwords(.:format)                                                      rooms/passwords#create
+#       room_owner_transfer PATCH  /rooms/:room_id/owner_transfers/:id(.:format)                                            rooms/owner_transfers#update
+#                           PUT    /rooms/:room_id/owner_transfers/:id(.:format)                                            rooms/owner_transfers#update
+#             room_ban_user DELETE /rooms/:room_id/ban_users/:id(.:format)                                                  rooms/ban_users#destroy
+#       room_drive_out_user DELETE /rooms/:room_id/drive_out_users/:id(.:format)                                            rooms/drive_out_users#destroy
 #                     rooms GET    /rooms(.:format)                                                                         rooms#index
 #                           POST   /rooms(.:format)                                                                         rooms#create
 #                  new_room GET    /rooms/new(.:format)                                                                     rooms#new
