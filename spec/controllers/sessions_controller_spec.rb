@@ -30,7 +30,7 @@ RSpec.describe SessionsController, type: :controller do
     end
     let(:nickname) { "ああああ" }
     let(:icon) { "icon_2" }
-    let(:user) { create(:user) }
+    let(:user) { create(:user, nickname: nil) }
 
     before do
       visit_user(user)

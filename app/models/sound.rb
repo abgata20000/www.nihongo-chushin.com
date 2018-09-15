@@ -1,6 +1,4 @@
-class Sound < ActiveHash::Base
-  include SupportActiveHash
-
+class Sound < ApplicationHash
   field :name
 
   5.times do |i|

@@ -49,7 +49,20 @@ class User < ApplicationRecord
   scope :into_the_room_at_asc, -> { order(into_the_room_at: :asc) }
 
   def logout
-    update(room_id: nil, nickname: nil, color: DEFAULT_COLOR, icon: DEFAULT_ICON, sound: DEFAULT_SOUND, into_the_room_at: nil, last_commented_at: nil, last_connected_at: nil)
+    update(
+      room_id: nil,
+      nickname: nil,
+      color: Color.random.name,
+      icon: Icon.random.name,
+      sound: DEFAULT_SOUND,
+      into_the_room_at: nil,
+      last_commented_at: nil,
+      last_connected_at: nil
+    )
+  end
+
+  def room_owner?
+    room && room.user_id == id
   end
 
   private

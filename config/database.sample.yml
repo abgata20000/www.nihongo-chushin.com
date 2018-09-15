@@ -1,11 +1,22 @@
-default: &default
+postgresql: &postgresql
   adapter: postgresql
-  pool: 5
-  timeout: 5000
   encoding: utf8
-  username: username
-  password: password
-  host: localhost
+  username: postgres
+  password:
+
+mysql: &mysql
+  adapter: mysql2
+  encoding: utf8mb4
+  username: root
+  password:
+
+
+default: &default
+  <<: *postgresql
+  # <<: *mysql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("DB_HOST", "localhost") %>
+  timeout: 5000
 
 development:
   <<: *default

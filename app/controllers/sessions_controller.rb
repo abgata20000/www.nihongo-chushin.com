@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
   before_action :redirect_to_root_with_logged_in, only: %w[new create]
-  before_action :set_user_session
+  before_action :set_icon_shuffle, only: %w[new create]
+  before_action :set_user_session, only: %w[new create]
 
   def new; end
 
@@ -19,6 +20,10 @@ class SessionsController < ApplicationController
 
   private
 
+  def set_icon_shuffle
+    @icons = Icon.icons.shuffle
+  end
+
   def set_user_session
     @user_session = UserSession.new(user_session_params)
   end
@@ -26,7 +31,7 @@ class SessionsController < ApplicationController
   def user_session_params
     tmp = params.fetch(:user_session, {}).permit(:nickname, :icon, :color)
     tmp[:user] = current_user
-    tmp[:icon] = "default" if Icon.special_icon?(tmp[:icon])
+    tmp[:icon] = @icons.first.name if Icon.special_icon?(tmp[:icon]) || tmp[:icon].blank?
     tmp
   end
 

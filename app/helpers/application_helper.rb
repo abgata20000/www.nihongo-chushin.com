@@ -2,7 +2,9 @@
 
 module ApplicationHelper
   def controller_and_action_classes
-    "#{controller_path.tr('/', ' ')} #{action_name}"
+    tmp = controller_path.split("/")
+    tmp.unshift("home") if tmp.size == 1
+    "#{tmp.join(' ')} #{action_name}"
   end
 
   def controller_classes

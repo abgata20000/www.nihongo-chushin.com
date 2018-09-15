@@ -1,6 +1,4 @@
-class Color < ActiveHash::Base
-  include SupportActiveHash
-
+class Color < ApplicationHash
   field :name
   field :text_color
   field :color_code
@@ -58,9 +56,7 @@ class Color < ActiveHash::Base
   create(name: "ffedab", text_color: "#656565", color_code: true)
 
   def color
-    return "##{name}" if color_code
-
-    name
+    "##{name}" if color_code ? "##{name}" : name
   end
 
   def color_class(current_user)

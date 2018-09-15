@@ -1,4 +1,4 @@
-- Icon.icons.each do |icon|
+- icons.each do |icon|
   .color.icon(@click="changeIcon('#{icon.name}')" v-bind:class="{selected:isIconSelected('#{icon.name}')}")
     = image_tag(icon.url)
 - # シークレットアイコン
