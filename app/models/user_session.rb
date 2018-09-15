@@ -5,6 +5,7 @@ class UserSession < ActiveType::Object
   attribute :icon, :string
   attribute :color, :string
   attribute :sound, :string
+  attribute :room_id, :integer
 
   default_value_for :color do
     User::DEFAULT_COLOR

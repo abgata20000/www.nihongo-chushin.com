@@ -10,6 +10,7 @@
         = f.input :icon, as: :hidden, error: false, input_html: {"v-model" => "icon"}
       .field
         = f.input :sound, as: :hidden, error: false
+        = f.input :room_id, as: :hidden, error: false
       button.ui.fluid.huge.teal.submit.button(type="submit")
         = I18n.t(:login)
     - if @user_session.errors.present?

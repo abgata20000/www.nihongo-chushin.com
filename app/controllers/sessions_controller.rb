@@ -7,7 +7,11 @@ class SessionsController < ApplicationController
 
   def create
     if @user_session.save
-      redirect_to rooms_path
+      if @user_session.room_id.present?
+        redirect_to room_joins_path(room_id: @user_session.room_id)
+      else
+        redirect_to rooms_path
+      end
     else
       render :new
     end
@@ -29,9 +33,10 @@ class SessionsController < ApplicationController
   end
 
   def user_session_params
-    tmp = params.fetch(:user_session, {}).permit(:nickname, :icon, :color)
+    tmp = params.fetch(:user_session, {}).permit(:nickname, :icon, :color, :room_id)
     tmp[:user] = current_user
     tmp[:icon] = @icons.first.name if Icon.special_icon?(tmp[:icon]) || tmp[:icon].blank?
+    tmp[:room_id] = room_id if room_id.present?
     tmp
   end
 
@@ -39,5 +44,9 @@ class SessionsController < ApplicationController
     return unless logged_in?
 
     redirect_to root_path
+  end
+
+  def room_id
+    params[:room_id]
   end
 end
