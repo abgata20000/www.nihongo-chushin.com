@@ -26,9 +26,6 @@ jobs:
     steps:
       - checkout
 
-      # Restore cache
-      - restore_cache:
-          key: phantomjs-2.1.1
       - restore_cache:
           keys:
             - gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "Gemfile.lock" }}
