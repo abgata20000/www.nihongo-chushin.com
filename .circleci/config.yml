@@ -28,11 +28,6 @@ jobs:
 
 
       # Restore cache
-      - run: sudo chmod -R 777 root
-      - restore_cache:
-          keys:
-            - gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "Gemfile.lock" }}
-            - gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-
 
       # install packages
       - run: sudo apt-get update
