@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
   def site_http_basic_authenticate_with
     return if ENV["BASIC_AUTH_NAME"].blank? || ENV["BASIC_AUTH_PASSWORD"].blank?
     return unless use_basic_auth_env?
+
     authenticate_or_request_with_http_basic("Application") do |name, password|
       name == ENV["BASIC_AUTH_NAME"] && password == ENV["BASIC_AUTH_PASSWORD"]
     end
@@ -46,6 +47,7 @@ class ApplicationController < ActionController::Base
 
   def logged_in_check
     return if logged_in?
+
     redirect_to signin_path
   end
 

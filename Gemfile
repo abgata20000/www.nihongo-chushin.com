@@ -73,7 +73,7 @@ group :test, :development do
   gem 'binding_of_caller'
   gem 'brakeman'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'capybara', '~> 2.13'
+  gem 'capybara', '>= 2.15'
   gem 'database_cleaner', '~> 1.3.0'
   gem 'database_rewinder'
   gem 'delorean'
@@ -89,7 +89,8 @@ group :test, :development do
   gem 'rspec-retry'
   gem 'rspec_junit_formatter', '0.2.2' # for circleci
   gem 'rubocop'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~> 3.4.1'
+  gem 'chromedriver-helper'
 end
 
 group :development, :staging, :review_app do
@@ -119,4 +120,5 @@ group :test do
   gem 'timecop'
   gem 'vcr'
   gem 'webmock'
+  gem 'rspec-retry'
 end

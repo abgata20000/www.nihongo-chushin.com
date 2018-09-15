@@ -13,3 +13,7 @@ import router from './common/router';
 import Vue from 'vue';
 import SuiVue from 'semantic-ui-vue';
 Vue.use(SuiVue);
+
+
+import LoginForm from  "./forms/login_form";
+LoginForm.start();

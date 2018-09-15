@@ -22,6 +22,7 @@ class ChatsController < ApplicationController
 
   def check_room
     return if current_user.room.present?
+
     redirect_to room_path(current_user.room)
   end
 end

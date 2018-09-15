@@ -1,3 +1,7 @@
 - Icon.icons.each do |icon|
-  div(class="#{icon.icon_class(@user_session)}" data-icon="#{icon.name}" onClick="selectIcon(this);")
-    = image_tag icon.url
+  .color.icon(@click="changeIcon('#{icon.name}')" v-bind:class="{selected:isIconSelected('#{icon.name}')}")
+    = image_tag(icon.url)
+- # シークレットアイコン
+- Icon.secret_icons.each do |secret_icon|
+  .color.icon(@click="changeIcon('#{secret_icon.name}')" v-bind:class="{selected:isIconSelected('#{secret_icon.name}')}" v-show="isShowSecret")
+    = image_tag(secret_icon.url)

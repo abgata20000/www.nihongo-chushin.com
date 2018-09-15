@@ -59,6 +59,7 @@ class Color < ActiveHash::Base
 
   def color
     return "##{name}" if color_code
+
     name
   end
 
