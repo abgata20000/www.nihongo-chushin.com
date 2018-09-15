@@ -38,4 +38,18 @@ class Room < ApplicationRecord
   def max?
     num <= users.size
   end
+
+  def random_color
+    enabled_colors.sample
+  end
+
+  private
+
+  def used_colors
+    users.pluck(:color)
+  end
+
+  def enabled_colors
+    Color.to_array - used_colors
+  end
 end

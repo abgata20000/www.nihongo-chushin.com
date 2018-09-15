@@ -1,5 +1,7 @@
 module Rooms
   class UsersController < ::Rooms::ApplicationController
-    def index; end
+    def index
+      @users = @room.users
+    end
   end
 end
