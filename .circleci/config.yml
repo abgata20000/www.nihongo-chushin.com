@@ -62,6 +62,10 @@ jobs:
 
       # Store cache
       - save_cache:
+          key: google-chrome
+          paths:
+            - /opt/google/chrome/google-chrome
+      - save_cache:
           key: phantomjs-2.1.1
           paths:
             - /usr/local/bin/phantomjs
