@@ -48,6 +48,7 @@ jobs:
       - run: yarn install
 
       # Store cache
+      - run: sudo chmod -R 777 root
       - save_cache:
           key: gems-cache-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "Gemfile.lock" }}
           paths:
