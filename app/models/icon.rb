@@ -12,7 +12,6 @@ class Icon < ActiveHash::Base
 
   # シークレットアイコン
   create(name: "n-suke", secret: true, special: false)
-  create(name: "oda", secret: true, special: false)
   create(name: "suika", secret: true, special: false)
   create(name: "t-yan", secret: true, special: false)
   create(name: "yoshio", secret: true, special: false)
@@ -23,19 +22,16 @@ class Icon < ActiveHash::Base
 
   class << self
     def icons
-      where(special: false)
+      where(special: false, secret: false)
+    end
+
+    def secret_icons
+      where(special: false, secret: true)
     end
 
     def special_icon?(icon)
       find_by(name: icon).try(:special)
     end
-  end
-
-  def icon_class(current_user)
-    class_arr = %w[color icon]
-    class_arr << "selected" if current_user && current_user.icon == name
-    class_arr << "secret" if secret
-    class_arr.join(" ")
   end
 
   def url
