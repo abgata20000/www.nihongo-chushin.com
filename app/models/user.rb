@@ -79,6 +79,26 @@ class User < ApplicationRecord
     Color.where(name: colors)
   end
 
+  def connected
+    update(last_connected_at: now)
+  end
+
+  def commented
+    update(last_commented_at: now, last_connected_at: now)
+  end
+
+  def chat_stream_label
+    "chats"
+  end
+
+  def user_stream_label
+    "user:#{id}"
+  end
+
+  def room_stream_label
+    "room:#{room_id}"
+  end
+
   private
 
   def generate_token

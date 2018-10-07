@@ -26,7 +26,8 @@
                 posting: false,
                 fetching: false,
                 last_chat_id: 0,
-                next_fetch: false
+                next_fetch: false,
+                myChatChannel: null
             }
         },
         computed: {
@@ -41,6 +42,11 @@
         },
         mounted() {
             this.setCommentFocus();
+            // HACK: なんでかわからないけどそのまま呼び出すと接続しない
+            setTimeout(() => {
+                this.$channel.connected();
+            }, 100);
+            this.$channel.setFetchCommentsCallback(this.fetchChats);
         },
         methods: {
             ...mapActions(["updateComment"]),
@@ -74,7 +80,7 @@
                     .then((_res) => {
                         // let chat = res.data;
                         // this.addComment(chat);
-                        this.fetchChats();
+                        // this.fetchChats();
                     })
                     .finally(() => {
                         this.finishPosting();

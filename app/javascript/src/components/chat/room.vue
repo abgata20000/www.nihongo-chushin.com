@@ -27,6 +27,9 @@
         created() {
             this.fetchRoom();
         },
+        mounted() {
+            this.$channel.setFetchRoomCallback(this.fetchRoom);
+        },
         methods: {
             ...mapActions(["updateShowCommentCount"]),
             fetchRoom() {

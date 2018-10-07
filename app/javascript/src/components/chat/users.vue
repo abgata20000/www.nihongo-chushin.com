@@ -21,6 +21,9 @@
         created() {
             this.fetchUsers();
         },
+        mounted() {
+            this.$channel.setFetchUsersCallback(this.fetchUsers);
+        },
         methods: {
             fetchUsers() {
                 Axios.get(API_URL)

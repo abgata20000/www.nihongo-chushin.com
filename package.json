@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "@rails/webpacker": "3.5",
+    "actioncable": "^5.2.1",
     "activestorage": "^5.2.1",
     "autolink": "https://github.com/egoist/autolink.js#master",
     "axios": "^0.18.0",

@@ -12,9 +12,15 @@ class ChatChannel < ApplicationCable::Channel
   def connected(_data)
     current_user.connected
     current_user.reload
+    set_stream(current_user)
+  end
+
+  private
+
+  def set_stream(user)
     stop_all_streams
-    stream_from "chats"
-    stream_from "user:#{current_user.id}"
-    stream_from "room:#{current_user.room_id}" if current_user.room
+    stream_from user.chat_stream_label
+    stream_from user.user_stream_label
+    stream_from user.room_stream_label
   end
 end
