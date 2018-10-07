@@ -47,6 +47,17 @@ class Room < ApplicationRecord
     Color.to_array - used_colors
   end
 
+  def title_with_nums
+    "(#{users.count}/#{num})#{name}"
+  end
+
+  def show_attributes
+    tmp = attributes
+    tmp.delete('password')
+    tmp[:room_name] = title_with_nums
+    tmp
+  end
+
   private
 
   def used_colors

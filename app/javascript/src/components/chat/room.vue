@@ -2,29 +2,28 @@
     <div id="room-info" class="ui card">
         <div class="content">
             <div class="header">
-                {{name}}
+                {{room.room_name}}
             </div>
         </div>
-        <div class="content">
-            <div class="ui small feed">
-                <user></user>
-            </div>
-        </div>
+        <users></users>
     </div>
 </template>
 
 <script>
-    import User from "./user.vue";
+    import Users from "./users.vue";
     import Axios from "axios";
-
     export default {
-        components: {User},
+        components: {Users},
         data() {
-            return {}
+            return {
+                room: {}
+            }
         },
         created() {
-            this.name = "room name";
-            this.users = [];
+            Axios.get("/api/room")
+                .then((res) => {
+                    this.room = res.data;
+                });
         }
     }
 </script>
