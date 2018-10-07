@@ -8,3 +8,4 @@ Rails.start();
 // refs: https://techracho.bpsinc.jp/hachi8833/2018_01_15/50860
 // router
 import "./controllers/sessions";
+import "./controllers/my_pages";

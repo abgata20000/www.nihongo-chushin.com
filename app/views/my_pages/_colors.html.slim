@@ -1,3 +1,3 @@
 - current_user.enabled_colors.each do |color|
-  span(class="#{color.color_class(current_user)}")
+  span(class="#{color.color_class}" @click="changeColor('#{color.name}')" v-bind:class="{selected:isColorSelected('#{color.name}')}")
     | あ
