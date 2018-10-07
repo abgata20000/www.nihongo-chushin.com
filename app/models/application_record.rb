@@ -56,7 +56,7 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def show_errors
-    errors.full_messages
+    {errors: errors.full_messages}
   end
 
   def created_at_to_s

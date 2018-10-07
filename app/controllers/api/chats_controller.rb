@@ -1,7 +1,8 @@
 module Api
   class ChatsController < ::Api::ApplicationController
     def index
-      @chats = current_user.room.chats
+      search_last_chat_id = last_chat_id
+      @chats = current_user.room.chats.where.has{id > search_last_chat_id}.order(id: :desc).limit(current_user.room.show_comment_count)
       render json: @chats.map(&:show_attributes)
     end
 
