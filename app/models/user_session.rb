@@ -6,6 +6,8 @@ class UserSession < ActiveType::Object
   attribute :color, :string
   attribute :sound, :string
   attribute :room_id, :integer
+  attribute :user_agent, :string
+  attribute :ip, :string
 
   default_value_for :color do
     User::DEFAULT_COLOR
@@ -28,12 +30,22 @@ class UserSession < ActiveType::Object
   private
 
   def update_user
-    user.update!(
+    user.login(login_params)
+  end
+
+  def login_params
+    {
       nickname: nickname,
       color: color,
       icon: icon,
       sound: sound,
+      user_agent: user_agent,
+      ip: ip,
       last_logged_in_at: Time.zone.now
-    )
+    }
+  end
+
+  def login_message
+    "[login]#{user.massage_info}"
   end
 end

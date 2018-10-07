@@ -35,6 +35,8 @@ class SessionsController < ApplicationController
   def user_session_params
     tmp = params.fetch(:user_session, {}).permit(:nickname, :icon, :color, :room_id)
     tmp[:user] = current_user
+    tmp[:ip] = remote_ip
+    tmp[:user_agent] = user_agent
     tmp[:icon] = @icons.first.name if Icon.special_icon?(tmp[:icon]) || tmp[:icon].blank?
     tmp[:room_id] = room_id if room_id.present?
     tmp
