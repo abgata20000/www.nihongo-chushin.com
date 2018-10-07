@@ -2,9 +2,7 @@
     <div class="comment-wrap">
         <div class="right-content-wrap">
             <div class="right-content">
-                <div class="desc medium" :class="colorClass">
-                    {{chat.comment}}
-                </div>
+                <div class="desc medium" :class="colorClass" v-html="htmlComment"></div>
             </div>
         </div>
         <div class="left-content">
@@ -21,6 +19,7 @@
 </template>
 
 <script>
+    import autoLink from "autolink/src/index";
     import store from "../../stores/chat_store";
     import {mapGetters, mapActions} from "vuex";
     export default {
@@ -38,6 +37,14 @@
             },
             mention() {
                 return "@" + this.chat.nickname;
+            },
+            htmlComment() {
+              return autoLink(this.chat.comment, {
+                  email: true,
+                  image: true,
+                  br: true,
+                  linkAttr: {target: '_blank'}
+              });
             },
             ...mapGetters(["comment"])
         },

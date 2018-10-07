@@ -4,6 +4,7 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "activestorage": "^5.2.1",
+    "autolink": "https://github.com/egoist/autolink.js#master",
     "axios": "^0.18.0",
     "rails-ujs": "^5.2.1",
     "semantic-ui-sass": "^2.3.1",
