@@ -10,7 +10,7 @@
         <div class="left-content">
             <div class="user-info">
                 <div class="avator medium" :class="colorClass">
-                    <img :src="iconUrl" />
+                    <img :src="iconUrl" @click="addMention()" />
                     <div class="name">
                         {{chat.nickname}}
                     </div>
@@ -21,8 +21,11 @@
 </template>
 
 <script>
+    import store from "../../stores/chat_store";
+    import {mapGetters, mapActions} from "vuex";
     export default {
         props: ["chat"],
+        store,
         data() {
             return {}
         },
@@ -32,6 +35,21 @@
             },
             iconUrl() {
                 return "/images/icon/" + this.chat.icon + ".png";
+            },
+            mention() {
+                return "@" + this.chat.nickname;
+            },
+            ...mapGetters(["comment"])
+        },
+        methods: {
+            ...mapActions(["updateComment"]),
+            addMention() {
+                let tmpComment = [this.mention, this.comment].join(" ");
+                this.updateComment(tmpComment);
+                // HACK: フォーカス当てるのが無理やりすぎるのでもっとスマートな方法で実装したい
+                // vuexにメソッド登録できないものか…
+                // もしくはpropsでメソッド渡してくるか(間に一つコンポーネント挟んでいるのでできれば別の方法がいい)
+                this.$parent.$parent.setCommentFocus()
             }
         }
     }

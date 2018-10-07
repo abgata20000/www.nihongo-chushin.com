@@ -13,19 +13,28 @@
 <script>
     import Chat from "./chat.vue";
     import Axios from "axios";
+    import store from "../../stores/chat_store";
+    import {mapGetters, mapActions} from "vuex";
 
     const API_URL = "/api/chats";
     export default {
         components: {Chat},
+        store,
         data() {
             return {
                 chats: [],
-                comment: "",
                 posting: false,
                 fetching: false,
                 last_chat_id: 0,
                 next_fetch: false
             }
+        },
+        computed: {
+            comment: {
+                get() {return this.$store.getters.comment},
+                set(value) {this.updateComment(value)}
+            },
+            ...mapGetters(["show_comment_count"])
         },
         created() {
             this.fetchChats();
@@ -34,6 +43,7 @@
             this.setCommentFocus();
         },
         methods: {
+            ...mapActions(["updateComment"]),
             fetchChats() {
                 if (this.fetching) {
                     this.next_fetch = true;
@@ -92,7 +102,7 @@
                 this.decreaseComment();
             },
             decreaseComment() {
-                let max = 30;
+                let max = this.show_comment_count;
                 let num = this.chats.length - max;
                 if (num < 1) return;
                 for (let i = 0; i < num; i++) {
