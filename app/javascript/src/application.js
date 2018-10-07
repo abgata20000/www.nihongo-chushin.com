@@ -6,14 +6,5 @@ import Rails from 'rails-ujs';
 Rails.start();
 // action_cableを利用る場合は↓が参考になりそう
 // refs: https://techracho.bpsinc.jp/hachi8833/2018_01_15/50860
-
 // router
-import router from './common/router';
-// semantic_ui
-import Vue from 'vue';
-import SuiVue from 'semantic-ui-vue';
-Vue.use(SuiVue);
-
-
-import LoginForm from  "./forms/login_form";
-LoginForm.start();
+import "./controllers/sessions";
