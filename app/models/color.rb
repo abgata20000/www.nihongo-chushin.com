@@ -59,9 +59,8 @@ class Color < ApplicationHash
     color_code ? "##{name}" : name
   end
 
-  def color_class(current_user)
+  def color_class
     class_arr = ["color-box", "color_#{name}"]
-    class_arr << "selected" if current_user && current_user.color == name
     class_arr.join(" ")
   end
 end

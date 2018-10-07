@@ -43,13 +43,13 @@ class Room < ApplicationRecord
     enabled_colors.sample
   end
 
+  def enabled_colors
+    Color.to_array - used_colors
+  end
+
   private
 
   def used_colors
     users.pluck(:color)
-  end
-
-  def enabled_colors
-    Color.to_array - used_colors
   end
 end

@@ -16,7 +16,7 @@ module NihongoChushin
 
       def webhook_urls
         tmp = []
-        tmp << ENV["SLACK_WEBHOOK_URL"]
+        tmp << ENV["SLACK_WEBHOOK_URL"] if ENV["SLACK_WEBHOOK_URL"].present?
         tmp.compact
       end
 

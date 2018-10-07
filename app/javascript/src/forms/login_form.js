@@ -1,15 +1,8 @@
 //
 import {Vue} from "../common/vue";
-import router from "../common/router";
 
 class LoginForm {
     static start() {
-        router('sessions', ['new', 'create'], () => {
-            this.bindVue();
-        });
-    }
-
-    static bindVue() {
         const app = new Vue({
             el: "#login-form",
             data: {
