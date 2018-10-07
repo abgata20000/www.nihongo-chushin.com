@@ -45,6 +45,28 @@ class ApplicationRecord < ActiveRecord::Base
     end
   end
 
+  def show_attributes
+    attributes.each_with_object({}) do |(key, value), hash|
+      hash[key] = if value.present? && value.is_a?(ActiveSupport::TimeWithZone)
+                    I18n.l(value)
+                  else
+                    value
+                  end
+    end
+  end
+
+  def show_errors
+    errors.full_messages
+  end
+
+  def created_at_to_s
+    I18n.l(created_at)
+  end
+
+  def updated_at_to_s
+    I18n.l(updated_at)
+  end
+
   private
 
   def now

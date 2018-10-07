@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 namespace :api do
-  resource :chats, only: %w(show create)
+  resources :chats, only: %w(index create)
   resource :room, only: %w(show)
   namespace :rooms do
     resources :users, only: %w(index)

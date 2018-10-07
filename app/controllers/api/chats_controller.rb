@@ -1,9 +1,8 @@
 module Api
   class ChatsController < ::Api::ApplicationController
-    def show
-      current_user.connected
-      @chats = Chat::ForPost.chats_with_render_views(current_user, last_chat_id)
-      render json: @chats
+    def index
+      @chats = current_user.room.chats
+      render json: @chats.map(&:show_attributes)
     end
 
     def create

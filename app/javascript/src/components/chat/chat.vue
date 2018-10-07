@@ -1,15 +1,21 @@
 <template>
-  <div class="chat">
-    <p>{{ name }}</p>
-  </div>
+    <div class="chat">
+        <system-comment :chat="chat" v-if="chat.system_message"></system-comment>
+        <user-comment :chat="chat" v-else></user-comment>
+    </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      name: "chat name"
+    import SystemComment from "./system_comment";
+    import UserComment from "./user_comment";
+    export default {
+        props: ["chat"],
+        components: {
+            "system-comment": SystemComment,
+            "user-comment": UserComment,
+        },
+        data() {
+            return {}
+        }
     }
-  }
-}
 </script>
