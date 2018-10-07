@@ -12,6 +12,7 @@
 <script>
     import Users from "./users.vue";
     import Axios from "axios";
+    const API_URL = "/api/room";
     export default {
         components: {Users},
         data() {
@@ -20,10 +21,15 @@
             }
         },
         created() {
-            Axios.get("/api/room")
-                .then((res) => {
-                    this.room = res.data;
-                });
+            this.fetchRoom();
+        },
+        methods: {
+            fetchRoom(){
+                Axios.get(API_URL)
+                    .then((res) => {
+                        this.room = res.data;
+                    });
+            }
         }
     }
 </script>

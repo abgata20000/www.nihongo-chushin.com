@@ -9,6 +9,8 @@
 <script>
     import User from "./user.vue";
     import Axios from "axios";
+    const API_URL = "/api/rooms/users";
+
     export default {
         components: {User},
         data() {
@@ -17,11 +19,15 @@
             }
         },
         created() {
-            Axios.get("/api/rooms/users")
-                .then((res) => {
-                    console.log(res.data);
-                    this.users = res.data;
-                });
+            this.fetchUsers();
+        },
+        methods: {
+            fetchUsers() {
+                Axios.get(API_URL)
+                    .then((res) => {
+                        this.users = res.data;
+                    });
+            }
         }
     }
 </script>
