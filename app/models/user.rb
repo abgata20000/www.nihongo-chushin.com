@@ -49,7 +49,8 @@ class User < ApplicationRecord
   scope :into_the_room_at_asc, -> { order(into_the_room_at: :asc) }
 
   def logout
-    update(
+    notice_to_slack(logout_message)
+    update!(
       room_id: nil,
       nickname: nil,
       color: Color.random.name,
@@ -65,9 +66,27 @@ class User < ApplicationRecord
     room && room.user_id == id
   end
 
+  def login(params)
+    result = update!(params)
+    notice_to_slack(login_message)
+    result
+  end
+
   private
 
   def generate_token
     self.token = SecureRandom.hex(32) if token.blank?
+  end
+
+  def login_message
+    "[login]#{massage_info}"
+  end
+
+  def logout_message
+    "[logout]#{massage_info}"
+  end
+
+  def massage_info
+    "UserID: #{id}, Nickname: #{nickname}, Room: #{room&.name}, IP: #{ip}, Time: #{now}"
   end
 end

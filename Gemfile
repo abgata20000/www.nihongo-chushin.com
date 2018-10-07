@@ -68,6 +68,9 @@ gem 'redis-namespace'
 gem 'redis-rails'
 gem 'scaffoldable', git: 'https://github.com/radicodeinc/scaffoldable.git'
 
+# slack
+gem 'slack-notifier'
+
 group :test, :development do
   gem 'binding_of_caller'
   gem 'factory_bot_rails'

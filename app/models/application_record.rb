@@ -39,11 +39,19 @@ class ApplicationRecord < ActiveRecord::Base
       records = records.destroy_all
       raise ActiveRecord::RecordInvalid unless records.all?(&:destroyed?)
     end
+
+    def now
+      Time.zone.now
+    end
   end
 
   private
 
   def now
-    Time.zone.now
+    self.class.now
+  end
+
+  def notice_to_slack(message)
+    NihongoChushin::SlackUtils.post(message)
   end
 end

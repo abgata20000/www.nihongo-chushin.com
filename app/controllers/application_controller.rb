@@ -55,6 +55,14 @@ class ApplicationController < ActionController::Base
     request.variant = request.device_variant
   end
 
+  def remote_ip
+    @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
+  end
+
+  def user_agent
+    request.user_agent
+  end
+
   def check_room_owner
     return if current_user.room_owner?
 
