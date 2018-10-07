@@ -1,8 +1,8 @@
 <template>
     <div class="user-list-item">
-        <img :class="userClass" :src="iconUrl" />
+        <img class="user-icon" :class="user.color_class" :src="user.icon_url"/>
         <span class="username">
-            {{user.nickname}}
+            {{showUserName}}
         </span>
     </div>
 </template>
@@ -14,11 +14,12 @@
             return {}
         },
         computed: {
-            userClass() {
-                return "user-icon color_" + this.user.color;
-            },
-            iconUrl() {
-                return "/images/icon/" + this.user.icon + ".png";
+            showUserName() {
+                let tmpName = this.user.nickname;
+                if (this.user.is_room_owner) {
+                    tmpName = `${tmpName}(★)`;
+                }
+                return tmpName;
             }
         }
     }

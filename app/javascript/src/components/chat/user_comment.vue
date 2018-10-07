@@ -2,13 +2,13 @@
     <div class="comment-wrap">
         <div class="right-content-wrap">
             <div class="right-content">
-                <div class="desc medium" :class="colorClass" v-html="htmlComment"></div>
+                <div class="desc medium" :class="chat.color_class" v-html="htmlComment"></div>
             </div>
         </div>
         <div class="left-content">
             <div class="user-info">
-                <div class="avator medium" :class="colorClass">
-                    <img :src="iconUrl" @click="addMention()" />
+                <div class="avator medium" :class="chat.color_class">
+                    <img :src="chat.icon_url" @click="addMention()" />
                     <div class="name">
                         {{chat.nickname}}
                     </div>
@@ -29,14 +29,8 @@
             return {}
         },
         computed: {
-            colorClass() {
-                return "color_" + this.chat.color;
-            },
-            iconUrl() {
-                return "/images/icon/" + this.chat.icon + ".png";
-            },
             mention() {
-                return "@" + this.chat.nickname;
+                return `@${this.chat.nickname}`;
             },
             htmlComment() {
               return autoLink(this.chat.comment, {

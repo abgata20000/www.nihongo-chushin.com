@@ -1,4 +1,5 @@
 class Chat < ApplicationRecord
+  include UserIconSupportable
   belongs_to :user, optional: true
   belongs_to :room
 

@@ -1,7 +1,8 @@
 module Api
   class MyPagesController < ::Api::ApplicationController
     def show
-      render json: current_user.show_my_page_attributes
+      @user = ActivType.cast(current_user, User::ForApi)
+      render json: @user.show_attributes
     end
   end
 end

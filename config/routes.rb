@@ -79,11 +79,11 @@ end
 #                           POST   /sessions(.:format)                                                                      sessions#create
 #                    signin GET    /signin(.:format)                                                                        sessions#new
 #                           GET    /sessions(.:format)                                                                      sessions#new
-#                 api_chats GET    /api/chats(.:format)                                                                     api/chats#show
+#                 api_chats GET    /api/chats(.:format)                                                                     api/chats#index
 #                           POST   /api/chats(.:format)                                                                     api/chats#create
 #                  api_room GET    /api/room(.:format)                                                                      api/rooms#show
 #           api_rooms_users GET    /api/rooms/users(.:format)                                                               api/rooms/users#index
-#              api_my_pages GET    /api/my_pages(.:format)                                                                  api/my_pages#show
+#               api_my_page GET    /api/my_page(.:format)                                                                   api/my_pages#show
 #        rails_service_blob GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 # rails_blob_representation GET    /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #        rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show

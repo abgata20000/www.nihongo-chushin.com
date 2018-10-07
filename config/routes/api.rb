@@ -5,5 +5,5 @@ namespace :api do
   namespace :rooms do
     resources :users, only: %w(index)
   end
-  resource :my_pages, only: %w(show)
+  resource :my_page, only: %w(show)
 end
