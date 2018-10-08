@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 class ActionDispatch::Routing::Mapper
   def draw(routes_name)
     instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
@@ -7,14 +6,14 @@ class ActionDispatch::Routing::Mapper
 end
 
 Rails.application.routes.draw do
-  # Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-  #  username == ENV['SIDEKIQ_BASIC_USER'] && password == ENV['SIDEKIQ_BASIC_PASSWORD']
-  # end
-  # mount Sidekiq::Web => '/my-sidekiq'
+  require 'sidekiq/web'
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+   username == ENV['SIDEKIQ_BASIC_USER'] && password == ENV['SIDEKIQ_BASIC_PASSWORD']
+  end
+  mount Sidekiq::Web, at: "/my-sidekiq"
 
   root to: "static_pages#top"
   get "vue_sample" => "static_pages#vue_sample"
-  resources :samples
 
   resource :my_pages, only: %w(show update)
   resource :room, only: %w() do
@@ -38,7 +37,7 @@ Rails.application.routes.draw do
   get 'signin', to: 'sessions#new'
   get 'sessions', to: 'sessions#new'
   #
-  # draw :api
+  draw :api
   # draw :admins
 end
 
@@ -47,14 +46,6 @@ end
 #                    Prefix Verb   URI Pattern                                                                              Controller#Action
 #                      root GET    /                                                                                        static_pages#top
 #                vue_sample GET    /vue_sample(.:format)                                                                    static_pages#vue_sample
-#                   samples GET    /samples(.:format)                                                                       samples#index
-#                           POST   /samples(.:format)                                                                       samples#create
-#                new_sample GET    /samples/new(.:format)                                                                   samples#new
-#               edit_sample GET    /samples/:id/edit(.:format)                                                              samples#edit
-#                    sample GET    /samples/:id(.:format)                                                                   samples#show
-#                           PATCH  /samples/:id(.:format)                                                                   samples#update
-#                           PUT    /samples/:id(.:format)                                                                   samples#update
-#                           DELETE /samples/:id(.:format)                                                                   samples#destroy
 #                  my_pages GET    /my_pages(.:format)                                                                      my_pages#show
 #                           PATCH  /my_pages(.:format)                                                                      my_pages#update
 #                           PUT    /my_pages(.:format)                                                                      my_pages#update
@@ -79,6 +70,11 @@ end
 #                           POST   /sessions(.:format)                                                                      sessions#create
 #                    signin GET    /signin(.:format)                                                                        sessions#new
 #                           GET    /sessions(.:format)                                                                      sessions#new
+#                 api_chats GET    /api/chats(.:format)                                                                     api/chats#index
+#                           POST   /api/chats(.:format)                                                                     api/chats#create
+#                  api_room GET    /api/room(.:format)                                                                      api/rooms#show
+#           api_rooms_users GET    /api/rooms/users(.:format)                                                               api/rooms/users#index
+#               api_my_page GET    /api/my_page(.:format)                                                                   api/my_pages#show
 #        rails_service_blob GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 # rails_blob_representation GET    /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #        rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show

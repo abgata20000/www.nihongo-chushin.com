@@ -57,17 +57,11 @@ gem 'simple_form'
 gem 'slim-rails'
 gem 'acts_as_paranoid', '~> 0.6.0'
 # sidekiq
-# gem 'sidekiq'
-# gem 'sidekiq-failures'
-# gem 'sidekiq-history'
-# gem 'sidekiq-statistic'
-# gem 'sidekiq-limit_fetch'
+gem 'sidekiq'
 #
-gem 'newrelic_rpm'
-gem 'redis-namespace'
-gem 'redis-rails'
+# gem 'newrelic_rpm'
 gem 'scaffoldable', git: 'https://github.com/radicodeinc/scaffoldable.git'
-
+gem 'sinatra', require: false
 # slack
 gem 'slack-notifier'
 

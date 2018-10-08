@@ -1,7 +1,10 @@
 module Rooms
-  class BanUsersController < ::Rooms::ApplicationController
-    def destroy
-      ban_or_drive_out_user(true)
+  class BanUsersController < ::Rooms::DriveOutUsersController
+    private
+
+    # TODO: 未実装
+    def user_class
+      User::ForBan
     end
   end
 end

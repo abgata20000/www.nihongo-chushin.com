@@ -9,3 +9,4 @@ Rails.start();
 // router
 import "./controllers/sessions";
 import "./controllers/my_pages";
+import "./controllers/rooms";
