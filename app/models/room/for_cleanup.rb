@@ -42,19 +42,16 @@ class Room < ApplicationRecord
 
     def cleanup
       # 接続切れチェック
-      expired_users.each do |user|
-        user.disconnected_the_room_system_comment
-        user.leave_room
-        user.broadcast_disconnect
+      users.each do |user|
+        next unless user.room_expired?
+
+        user = ActiveType.cast(user, User::ForTimeout)
+        user.force_leave!
       end
       set_next_job
     end
 
     private
-
-    def expired_users
-      users.select(&:room_expired?)
-    end
 
     # 部屋がまだあれば次回の切断処理をキューに設定
     def set_next_job

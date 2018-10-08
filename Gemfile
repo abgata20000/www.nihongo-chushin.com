@@ -59,7 +59,7 @@ gem 'acts_as_paranoid', '~> 0.6.0'
 # sidekiq
 gem 'sidekiq'
 #
-gem 'newrelic_rpm'
+# gem 'newrelic_rpm'
 gem 'scaffoldable', git: 'https://github.com/radicodeinc/scaffoldable.git'
 gem 'sinatra', require: false
 # slack

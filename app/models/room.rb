@@ -70,6 +70,10 @@ class Room < ApplicationRecord
     num <= users.size
   end
 
+  def enabled?
+    deleted_at.nil?
+  end
+
   def random_color
     enabled_colors.sample
   end

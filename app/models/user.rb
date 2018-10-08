@@ -146,12 +146,14 @@ class User < ApplicationRecord
 
   def connection_expired?
     return true if room.blank?
+
     # ちょうどだと接続状態によって判定おかしくなりそうなので10秒だけコネクションに余裕をもたせる
     last_connected_at + (room.connection_disconnected_time + 10).second < now
   end
 
   def comment_expired?
     return true if room.blank?
+
     last_commented_at + room.comment_disconnected_time.second < now
   end
 
