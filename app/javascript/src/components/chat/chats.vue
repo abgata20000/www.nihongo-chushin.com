@@ -66,7 +66,6 @@
             },
             fetchChats() {
                 if (this.fetching) {
-                    console.log("next fetch settnig");
                     this.next_fetch = true;
                     return;
                 }
