@@ -14,7 +14,6 @@ Rails.application.routes.draw do
 
   root to: "static_pages#top"
   get "vue_sample" => "static_pages#vue_sample"
-  resources :samples
 
   resource :my_pages, only: %w(show update)
   resource :room, only: %w() do
