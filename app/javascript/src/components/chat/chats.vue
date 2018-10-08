@@ -39,7 +39,10 @@
                     this.updateComment(value)
                 }
             },
-            ...mapGetters(["show_comment_count"])
+            connectionWaitTime() {
+                return this.connection_disconnected_time * 1000;
+            },
+            ...mapGetters(["show_comment_count", "comment_disconnected_time", "connection_disconnected_time"])
         },
         created() {
             this.fetchChats();
@@ -49,11 +52,18 @@
             // HACK: なんでかわからないけどそのまま呼び出すと接続しない
             setTimeout(() => {
                 this.$channel.connected();
+                this.connectContinuation();
             }, 100);
             this.$channel.setFetchCommentsCallback(this.fetchChats);
         },
         methods: {
             ...mapActions(["updateComment"]),
+            connectContinuation() {
+                this.$channel.connect();
+                setTimeout(() => {
+                    this.connectContinuation();
+                }, this.connectionWaitTime);
+            },
             fetchChats() {
                 if (this.fetching) {
                     console.log("next fetch settnig");
