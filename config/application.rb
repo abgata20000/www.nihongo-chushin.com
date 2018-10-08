@@ -32,7 +32,7 @@ module WwwNihongoChushinCom
       g.helper false
     end
 
-    # config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :sidekiq
 
     config.active_record.default_timezone = :local
     config.time_zone = 'Tokyo'

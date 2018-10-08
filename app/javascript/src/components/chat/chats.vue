@@ -72,7 +72,7 @@
                 this.fetching = true;
                 this.next_fetch = false;
                 let params = {last_chat_id: this.last_chat_id};
-                Axios.get(API_URL, params)
+                Axios.get(API_URL, {params: params})
                     .then((res) => {
                         let chats = res.data.reverse();
                         chats.forEach((chat) => {

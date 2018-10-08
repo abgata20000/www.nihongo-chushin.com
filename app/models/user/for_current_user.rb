@@ -40,10 +40,10 @@
 
 class User < ApplicationRecord
   class ForCurrentUser < ActiveType::Record[User]
-    def join_room(room)
+    def join_room(room, create_room: false)
       result = update!(room: room, color: room.random_color, into_the_room_at: now, last_commented_at: now, last_connected_at: now)
       notice_to_slack(join_room_message)
-      into_the_room_system_comment
+      into_the_room_system_comment unless create_room
       result
     end
 
@@ -55,6 +55,11 @@ class User < ApplicationRecord
       leave_the_room_system_comment(prev_room.id) unless force_leave
       prev_room.close_with_leave_if_empty_users
       prev_room.move_owner_first_user if is_perv_room_owner
+    end
+
+    def create_the_room_system_comment(room_id)
+      message = "#{nickname}さんが部屋を作成しました。"
+      echo_system_comment(room_id, message)
     end
 
     private
@@ -69,11 +74,6 @@ class User < ApplicationRecord
 
     def into_the_room_system_comment
       message = "#{nickname}さんが入室しました。"
-      echo_system_comment(room_id, message)
-    end
-
-    def create_the_room_system_comment
-      message = "#{nickname}さんが部屋を作成しました。"
       echo_system_comment(room_id, message)
     end
 

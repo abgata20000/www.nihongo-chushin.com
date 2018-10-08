@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 class ActionDispatch::Routing::Mapper
   def draw(routes_name)
     instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
@@ -7,10 +6,11 @@ class ActionDispatch::Routing::Mapper
 end
 
 Rails.application.routes.draw do
-  # Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-  #  username == ENV['SIDEKIQ_BASIC_USER'] && password == ENV['SIDEKIQ_BASIC_PASSWORD']
-  # end
-  # mount Sidekiq::Web => '/my-sidekiq'
+  require 'sidekiq/web'
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+   username == ENV['SIDEKIQ_BASIC_USER'] && password == ENV['SIDEKIQ_BASIC_PASSWORD']
+  end
+  mount Sidekiq::Web, at: "/my-sidekiq"
 
   root to: "static_pages#top"
   get "vue_sample" => "static_pages#vue_sample"

@@ -140,6 +140,21 @@ class User < ApplicationRecord
     "room:#{room_id}"
   end
 
+  def room_expired?
+    connection_expired? || comment_expired?
+  end
+
+  def connection_expired?
+    return true if room.blank?
+    # ちょうどだと接続状態によって判定おかしくなりそうなので10秒だけコネクションに余裕をもたせる
+    last_connected_at + (room.connection_disconnected_time + 10).second < now
+  end
+
+  def comment_expired?
+    return true if room.blank?
+    last_commented_at + room.comment_disconnected_time.second < now
+  end
+
   private
 
   def generate_token
