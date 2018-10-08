@@ -28,10 +28,18 @@ class Chat < ApplicationRecord
     DEFAULT_EXPIRE_DATA_REMOVE_DAY = 180
     class << self
       def run
-        targets.delete_all
+        num = targets.delete_all
+        notice_to_slack(num)
+        num
       end
 
       private
+
+      def notice_to_slack(num)
+        return if num.zero?
+        message = "[ExpireDataRemover] #{expire_day}日を経過したコメント#{num}件を削除しました。"
+        NihongoChushin::SlackUtils.post(message)
+      end
 
       def targets
         target_date = expire_day.days.ago.beginning_of_day
