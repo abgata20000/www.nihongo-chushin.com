@@ -68,9 +68,35 @@ class Room < ApplicationRecord
     close
   end
 
+  def owner_transfer(to_user)
+    return if is_fixed
+    return unless to_user
+    return unless to_user.room_id == id
+    update(user: to_user)
+    move_owner_system_comment
+  end
+
+  def move_owner_first_user
+    owner_transfer(first_user)
+  end
+
   private
+
+  def first_user
+    users.into_the_room_at_asc.first
+  end
 
   def used_colors
     users.pluck(:color)
+  end
+
+  def move_owner_system_comment
+    return unless user
+    message = "#{user.nickname}さんに管理権限が移動しました。"
+    echo_system_comment(message)
+  end
+
+  def echo_system_comment(message)
+    Chat::SystemMessage.echo(id, message, fetch_users: true)
   end
 end
