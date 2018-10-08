@@ -93,17 +93,19 @@ ActiveRecord::Schema.define(version: 0) do
     t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
-  create_table "tasks", comment: "タスク管理", force: :cascade do |t|
-    t.string "key", null: false, comment: "キー"
-    t.string "name", comment: "名前"
-    t.integer "total_exec_count", default: 0, null: false, comment: "累計実行回数"
-    t.integer "exec_count", default: 0, null: false, comment: "実行回数"
-    t.integer "max_exec_count", default: 0, null: false, comment: "最大実行回数(リセットに利用)"
-    t.boolean "is_running", default: false, null: false, comment: "実行中の判定"
-    t.text "comment", comment: "コメント内容"
+  create_table "task_locks", comment: "タスク管理", force: :cascade do |t|
+    t.string "key", null: false, comment: "管理用のキー(ユニーク)"
+    t.string "name", comment: "タスク名"
+    t.integer "exec_block_count", default: 0, comment: "ロック中に叩かれてブロックされた回数"
+    t.integer "exec_count", default: 0, comment: "累計実行回数"
+    t.integer "block_limit_count", default: 0, comment: "何回ブロックされたらロックを解除するかの回数"
+    t.datetime "last_executed_at", comment: "最終実行日時"
+    t.boolean "locking", default: false, comment: "ロック中の判定"
+    t.text "memo", comment: "メモ"
+    t.integer "once_exec_limit", comment: "1回の実行で処理する件数"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["key"], name: "index_tasks_on_key", unique: true
+    t.index ["key"], name: "index_task_locks_on_key", unique: true
   end
 
   create_table "users", comment: "ユーザー情報", force: :cascade do |t|

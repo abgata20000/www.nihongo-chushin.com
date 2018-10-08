@@ -37,6 +37,7 @@ class Chat < ApplicationRecord
 
       def notice_to_slack(num)
         return if num.zero?
+
         message = "[ExpireDataRemover] #{expire_day}日を経過したコメント#{num}件を削除しました。"
         NihongoChushin::SlackUtils.post(message)
       end
