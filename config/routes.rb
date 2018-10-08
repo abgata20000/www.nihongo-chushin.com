@@ -46,14 +46,6 @@ end
 #                    Prefix Verb   URI Pattern                                                                              Controller#Action
 #                      root GET    /                                                                                        static_pages#top
 #                vue_sample GET    /vue_sample(.:format)                                                                    static_pages#vue_sample
-#                   samples GET    /samples(.:format)                                                                       samples#index
-#                           POST   /samples(.:format)                                                                       samples#create
-#                new_sample GET    /samples/new(.:format)                                                                   samples#new
-#               edit_sample GET    /samples/:id/edit(.:format)                                                              samples#edit
-#                    sample GET    /samples/:id(.:format)                                                                   samples#show
-#                           PATCH  /samples/:id(.:format)                                                                   samples#update
-#                           PUT    /samples/:id(.:format)                                                                   samples#update
-#                           DELETE /samples/:id(.:format)                                                                   samples#destroy
 #                  my_pages GET    /my_pages(.:format)                                                                      my_pages#show
 #                           PATCH  /my_pages(.:format)                                                                      my_pages#update
 #                           PUT    /my_pages(.:format)                                                                      my_pages#update

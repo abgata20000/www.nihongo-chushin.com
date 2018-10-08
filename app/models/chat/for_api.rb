@@ -2,17 +2,17 @@
 #
 # Table name: chats
 #
-#  id             :integer          not null, primary key
-#  user_id        :integer
-#  room_id        :integer          not null
-#  nickname       :string
-#  color          :string
-#  icon           :string
-#  comment        :text
-#  system_message :boolean          default(TRUE), not null
-#  deleted_at     :datetime
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id                               :bigint(8)        not null, primary key
+#  color(コメント時の色)                   :string
+#  comment(コメント内容)                  :text
+#  deleted_at(削除時間)                 :datetime
+#  icon(コメント時のアイコン)                 :string
+#  nickname(コメントした時のニックネーム)         :string
+#  system_message(システムメッセージかどうかの判定) :boolean          default(TRUE), not null
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  room_id(部屋ID)                    :integer          not null
+#  user_id(ユーザーID)                  :integer
 #
 # Indexes
 #
