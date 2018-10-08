@@ -19,6 +19,10 @@ class ChatChannel {
                 if (params.fetch_users) {
                     if (_this.fetchUsersCallback) _this.fetchUsersCallback(params);
                 }
+
+                if (params.force_disconnect) {
+                    _this.forceDisconnectCallback();
+                }
             }
         });
     }
@@ -37,6 +41,10 @@ class ChatChannel {
 
     setFetchUsersCallback(callback) {
         this.fetchUsersCallback = callback;
+    }
+
+    forceDisconnectCallback() {
+        location.reload();
     }
 }
 

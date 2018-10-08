@@ -24,18 +24,5 @@ module Rooms
     def check_current_room
       redirect_to room_path(current_room) if current_room.present? && current_room.id != room_id.to_i
     end
-
-    def ban_or_drive_out_user(force_ban = false)
-      user_id = params[:id]
-      user = User.find(user_id)
-      if force_ban
-        user.ban!
-      else
-        user.drive_out!
-      end
-      redirect_to room_path(current_user.room)
-    # rescue StandardError => _e
-    #  redirect_to room_path(current_user.room)
-    end
   end
 end

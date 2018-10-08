@@ -1,4 +1,5 @@
 class RoomsController < ApplicationController
+  before_action :check_current_room, only: %w[show edit update]
   before_action :check_room_owner, only: %w[edit update]
   before_action :find_room, only: %w[show edit update]
   before_action :set_room, only: %w[new create]
@@ -44,6 +45,11 @@ class RoomsController < ApplicationController
     @room = Room::ForUpdate.enabled.find(id)
     @room.assign_attributes(controller_params)
   rescue StandardError => _e
+    redirect_to rooms_path
+  end
+
+  def check_current_room
+    return if id.to_i == current_user.room_id
     redirect_to rooms_path
   end
 
