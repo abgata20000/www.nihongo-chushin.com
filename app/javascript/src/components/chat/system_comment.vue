@@ -3,7 +3,8 @@
         <div class="right-content-wrap">
             <div class="right-content">
                 <div class="system">
-                    {{chat.comment}}
+                    <p class="message">{{chat.comment}}</p>
+                    <p class="datetime">{{chat.created_at}}</p>
                 </div>
             </div>
         </div>
