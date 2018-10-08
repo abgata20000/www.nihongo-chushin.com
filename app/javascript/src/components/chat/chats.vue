@@ -32,8 +32,12 @@
         },
         computed: {
             comment: {
-                get() {return this.$store.getters.comment},
-                set(value) {this.updateComment(value)}
+                get() {
+                    return this.$store.getters.comment
+                },
+                set(value) {
+                    this.updateComment(value)
+                }
             },
             ...mapGetters(["show_comment_count"])
         },
@@ -52,6 +56,7 @@
             ...mapActions(["updateComment"]),
             fetchChats() {
                 if (this.fetching) {
+                    console.log("next fetch settnig");
                     this.next_fetch = true;
                     return;
                 }
@@ -64,6 +69,12 @@
                         chats.forEach((chat) => {
                             this.addComment(chat);
                         });
+                        if (chats.length == 0 && this.last_chat_id == 0) {
+                            // HACK: safariだと何故か初回取得できない場合がある
+                            setTimeout(() => {
+                                this.fetchChats();
+                            }, 500);
+                        }
                     })
                     .finally(() => {
                         this.fetching = false;

@@ -9,6 +9,7 @@
 <script>
     import User from "./user.vue";
     import Axios from "axios";
+
     const API_URL = "/api/rooms/users";
 
     export default {
@@ -28,7 +29,14 @@
             fetchUsers() {
                 Axios.get(API_URL)
                     .then((res) => {
-                        this.users = res.data;
+                        let users = res.data;
+                        if (users.length > 0) {
+                            this.users = users;
+                        } else {
+                            setTimeout(() => {
+                                this.fetchUsers()
+                            }, 500);
+                        }
                     });
             }
         }
