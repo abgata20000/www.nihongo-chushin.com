@@ -26,8 +26,16 @@
 class Chat < ApplicationRecord
   class SystemMessage < ActiveType::Record[Chat]
     include Broadcastable
-
     default_value_for :system_message, true
 
+    class << self
+      def echo(room_id, comment, fetch_comments: true, fetch_users: false, fetch_room: false)
+        create!(room_id: room_id, comment: comment,
+                fetch_comments: fetch_comments,
+                fetch_room: fetch_room,
+                fetch_users: fetch_users
+        )
+      end
+    end
   end
 end

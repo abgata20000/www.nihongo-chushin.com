@@ -3,11 +3,14 @@
 module NihongoChushin
   class Broadcast
     class << self
-      def broadcast(label, fetch_comments: false, fetch_room: false, fetch_users: false)
+      def broadcast(label, user_id: nil, chat_id: nil, room_id: nil, fetch_comments: false, fetch_room: false, fetch_users: false)
         params = {
             fetch_comments: fetch_comments,
             fetch_room: fetch_room,
             fetch_users: fetch_users,
+            user_id: user_id,
+            chat_id: chat_id,
+            room_id: room_id
         }
         ActionCable.server.broadcast(label, params)
       end

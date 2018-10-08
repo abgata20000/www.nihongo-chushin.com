@@ -31,7 +31,7 @@ class Chat < ApplicationRecord
 
     def user_commented
       user.commented
-      NihongoChushin::Broadcast.broadcast(user.room_stream_label, fetch_comments: true)
+      NihongoChushin::Broadcast.broadcast(user.room_stream_label, user_id: user.id, fetch_comments: true)
     end
   end
 end

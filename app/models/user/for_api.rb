@@ -2,6 +2,7 @@ class User < ApplicationRecord
   class ForApi < ActiveType::Record[User]
     class << self
       def room_users(current_user)
+        return [] if current_user.room.blank?
         where(room: current_user.room).into_the_room_at_asc
       end
     end

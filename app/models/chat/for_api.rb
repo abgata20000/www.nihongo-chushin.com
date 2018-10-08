@@ -27,7 +27,8 @@ class Chat < ApplicationRecord
   class ForApi < ActiveType::Record[Chat]
     class << self
       def chats(current_user, last_chat_id)
-        where(room: current_user.room).where.has{id > last_chat_id}.order(id: :desc).limit(current_user.room.show_comment_count)
+        limit = current_user.room.present? ? current_user.room.show_comment_count : 30
+        where(room: current_user.room).where.has{id > last_chat_id}.order(id: :desc).limit(limit)
       end
     end
 
