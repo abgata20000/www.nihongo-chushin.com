@@ -84,7 +84,7 @@ class Room < ApplicationRecord
 
   def show_attributes
     tmp = attributes
-    tmp.delete('password')
+    tmp.delete("password")
     tmp[:room_name] = title_with_nums
     tmp
   end
@@ -95,7 +95,8 @@ class Room < ApplicationRecord
 
   def close_with_leave_if_empty_users
     return if is_fixed
-    return if users.count > 0
+    return if users.count.positive?
+
     close
   end
 
@@ -103,6 +104,7 @@ class Room < ApplicationRecord
     return if is_fixed
     return unless to_user
     return unless to_user.room_id == id
+
     update(user: to_user)
     move_owner_system_comment
   end
@@ -123,6 +125,7 @@ class Room < ApplicationRecord
 
   def move_owner_system_comment
     return unless user
+
     message = "#{user.nickname}さんに管理権限が移動しました。"
     echo_system_comment(message)
   end

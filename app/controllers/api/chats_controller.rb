@@ -10,7 +10,7 @@ module Api
       if @chat.save
         render json: @chat.show_attributes
       else
-        render json: @chat.show_errors, status: 400
+        render json: @chat.show_errors, status: :bad_request
       end
     end
 

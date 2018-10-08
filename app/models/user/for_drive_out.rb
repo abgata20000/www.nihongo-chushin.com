@@ -57,7 +57,7 @@ class User < ApplicationRecord
     end
 
     def broadcast_disconnect_params
-      {force_disconnect: true, user_id: id}
+      { force_disconnect: true, user_id: id }
     end
 
     def echo_force_leave_system_comment

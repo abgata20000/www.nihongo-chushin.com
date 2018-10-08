@@ -115,6 +115,7 @@ class User < ApplicationRecord
 
   def enabled_colors
     return Color.all unless room
+
     colors = room.enabled_colors + [color]
     Color.where(name: colors)
   end

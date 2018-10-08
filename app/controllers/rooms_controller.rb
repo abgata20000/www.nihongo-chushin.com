@@ -50,6 +50,7 @@ class RoomsController < ApplicationController
 
   def check_current_room
     return if id.to_i == current_user.room_id
+
     redirect_to rooms_path
   end
 

@@ -3,7 +3,7 @@ module Api
     def show
       @room = ActiveType.cast(current_room, Room::ForApi)
       render json: @room.show_attributes
-    rescue => _e
+    rescue StandardError => _e
       render json: []
     end
   end

@@ -26,12 +26,12 @@ class Chat < ApplicationRecord
 
     def broadcast_params
       {
-          chat_id: id,
-          user_id: user_id,
-          room_id: room_id,
-          fetch_comments: fetch_comments,
-          fetch_room: fetch_room,
-          fetch_users: fetch_users
+        chat_id: id,
+        user_id: user_id,
+        room_id: room_id,
+        fetch_comments: fetch_comments,
+        fetch_room: fetch_room,
+        fetch_users: fetch_users
       }
     end
   end

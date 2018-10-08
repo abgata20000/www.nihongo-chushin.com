@@ -1,6 +1,5 @@
 module Rooms
   class BanUsersController < ::Rooms::DriveOutUsersController
-
     private
 
     # TODO: 未実装

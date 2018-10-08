@@ -9,8 +9,8 @@ module Rooms
     def force_leave
       target_user.force_leave!
       redirect_to room_path(current_user.room)
-    #rescue StandardError => _e
-    #  redirect_to room_path(current_user.room)
+      # rescue StandardError => _e
+      #  redirect_to room_path(current_user.room)
     end
 
     def target_user

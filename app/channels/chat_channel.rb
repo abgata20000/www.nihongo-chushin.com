@@ -12,7 +12,7 @@ class ChatChannel < ApplicationCable::Channel
   def connected(_data)
     current_user.connected
     current_user.reload
-    set_stream(current_user)
+    stream_setting(current_user)
   end
 
   def connect
@@ -21,7 +21,7 @@ class ChatChannel < ApplicationCable::Channel
 
   private
 
-  def set_stream(user)
+  def stream_setting(user)
     stop_all_streams
     stream_from user.chat_stream_label
     stream_from user.user_stream_label

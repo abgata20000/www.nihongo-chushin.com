@@ -25,11 +25,22 @@
 
 class Chat < ApplicationRecord
   class ExpireDataRemover < ActiveType::Record[Chat]
-    # include ExpireDataRemovable
+    DEFAULT_EXPIRE_DATA_REMOVE_DAY = 180
     class << self
+      def run
+        targets.delete_all
+      end
+
       private
 
+      def targets
+        target_date = expire_day.days.ago.beginning_of_day
+        where.has { updated_at < target_date }
+      end
 
+      def expire_day
+        ENV["EXPIRE_DATA_REMOVE_DAY"].present? ? ENV["EXPIRE_DATA_REMOVE_DAY"].to_i : DEFAULT_EXPIRE_DATA_REMOVE_DAY
+      end
     end
   end
 end
