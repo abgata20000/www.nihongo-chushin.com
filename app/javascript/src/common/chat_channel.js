@@ -31,6 +31,10 @@ class ChatChannel {
         this.channel.perform("connected", data);
     }
 
+    connect(data = {}) {
+        this.channel.perform("connect", data);
+    }
+
     setFetchCommentsCallback(callback) {
         this.fetchCommentsCallback = callback;
     }

@@ -15,6 +15,10 @@ class ChatChannel < ApplicationCable::Channel
     set_stream(current_user)
   end
 
+  def connect
+    current_user.connected
+  end
+
   private
 
   def set_stream(user)

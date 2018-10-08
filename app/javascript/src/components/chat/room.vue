@@ -31,12 +31,14 @@
             this.$channel.setFetchRoomCallback(this.fetchRoom);
         },
         methods: {
-            ...mapActions(["updateShowCommentCount"]),
+            ...mapActions(["updateShowCommentCount", "updateCommentDisconnectedTime", "updateConnectionDisconnectedTime"]),
             fetchRoom() {
                 Axios.get(API_URL)
                     .then((res) => {
                         this.room = res.data;
                         this.updateShowCommentCount(this.room.show_comment_count);
+                        this.updateCommentDisconnectedTime(this.room.comment_disconnected_time);
+                        this.updateConnectionDisconnectedTime(this.room.connection_disconnected_time);
                     });
             }
         }
