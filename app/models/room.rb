@@ -58,6 +58,16 @@ class Room < ApplicationRecord
     tmp
   end
 
+  def close
+    update(deleted_at: now)
+  end
+
+  def close_with_leave_if_empty_users
+    return if is_fixed
+    return if users.count > 0
+    close
+  end
+
   private
 
   def used_colors

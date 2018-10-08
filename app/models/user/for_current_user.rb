@@ -12,7 +12,7 @@ class User < ApplicationRecord
       prev_room = room
       update!(room: nil, into_the_room_at: nil, last_commented_at: nil, last_connected_at: nil)
       leave_the_room_system_comment(prev_room.id)
-      # prev_room.close_with_leave_if_empty_users
+      prev_room.close_with_leave_if_empty_users
       # prev_room.move_owner_first_user
     end
 

@@ -15,13 +15,8 @@ module Rooms
 
     def check_something
       check_password
-      check_room_exists
       check_room_max
       check_exists_username
-    end
-
-    def check_room_exists
-      redirect_to rooms_path, notice: "部屋が存在しません。" if @room.blank?
     end
 
     def check_room_max

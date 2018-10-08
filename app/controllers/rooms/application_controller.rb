@@ -16,9 +16,9 @@ module Rooms
     def find_room
       return if room_id.blank?
 
-      @room = room_class.enabled.find_by(id: room_id)
+      @room = room_class.enabled.find_by!(id: room_id)
     rescue StandardError => _e
-      redirect_to rooms_path
+      redirect_to rooms_path, notice: "部屋が存在しません。"
     end
 
     def check_current_room
