@@ -7,7 +7,7 @@ module Rooms
     private
 
     def owner_transfer
-      user_id = params[:user_id]
+      user_id = params[:id]
       to_user = User.find(user_id)
       current_user.room.owner_transfer(to_user) if current_user.room_owner?
       redirect_to room_path(current_user.room)
