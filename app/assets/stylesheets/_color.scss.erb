@@ -26,3 +26,14 @@
   color: <%= color.text_color %>;
 }
 <% end %>
+
+.comments-wrap {
+<% Color.all.each do |color| %>
+  .comment-text-right.color_<%= color.name %>:after {
+    border-right: 10px solid <%= color.color %>;
+  }
+  .comment-text-left.color_<%= color.name %>:after {
+    border-left: 10px solid <%= color.color %>;
+  }
+<% end %>
+}
