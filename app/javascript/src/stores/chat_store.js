@@ -1,4 +1,4 @@
-import {Vuex} from "./../common/vue";
+import {Vuex} from "./../libs/vue";
 const DEFAULT_SHOW_COMMENT_COUNT = 30;
 const DEFAULT_COMMENT_DISCONNECTED_TIME = 900;
 const DEFAULT_CONNECTION_DISCONNECTED_TIME = 60;

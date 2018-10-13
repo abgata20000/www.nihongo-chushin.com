@@ -138,3 +138,10 @@
         }
     }
 </script>
+<style scoped>
+    .chats-sample {
+        font-size: 2em;
+        text-align: center;
+        color: green;
+    }
+</style>
