@@ -17,7 +17,7 @@
     import Room from "./room";
     import CommentForm from "./comment_form";
     import Comments from "./comments";
-    import {RotateSquare2} from 'vue-loading-spinner'
+    import {RotateSquare2} from "vue-loading-spinner";
 
     const API_URL = "/api/my_page";
     export default {

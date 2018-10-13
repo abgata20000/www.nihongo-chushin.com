@@ -6,6 +6,9 @@ const MyPageModule = {
     getters: {
         myPage(state) {
             return state.myPage;
+        },
+        sound(state) {
+            return state.myPage.sound;
         }
     },
     mutations: {
