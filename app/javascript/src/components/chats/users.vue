@@ -28,7 +28,6 @@
             ...mapActions("UsersModule", ["updateUsers"]),
             fetchUsers(params = {},isInit = false) {
                 this.$http.get(API_URL).then((res) => {
-                    const myPage = res.data;
                     const users = res.data;
                     this.updateUsers(users);
                     if (isInit) {

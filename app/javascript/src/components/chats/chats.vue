@@ -3,6 +3,7 @@
         <div id="chats">
             <room></room>
             <comment-form></comment-form>
+            <comments></comments>
         </div>
     </div>
 </template>
@@ -12,12 +13,14 @@
     import store from "../../stores/chats_store";
     import Room from "./room";
     import CommentForm from "./comment_form";
+    import Comments from "./comments";
     const API_URL = "/api/my_page";
     export default {
         store,
         components: {
             Room,
-            CommentForm
+            CommentForm,
+            Comments
         },
         data() {
             return {}
