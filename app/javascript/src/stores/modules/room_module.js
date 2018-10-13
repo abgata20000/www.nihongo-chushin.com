@@ -13,6 +13,15 @@ const RoomModule = {
     getters: {
         room(state) {
             return state.room;
+        },
+        showCommentCount(state) {
+            return state.room.show_comment_count;
+        },
+        commentDisconnectedTime(state) {
+            return state.room.comment_disconnected_time;
+        },
+        connectionDisconnectedTime(state) {
+            return state.room.connection_disconnected_time;
         }
     },
     mutations: {

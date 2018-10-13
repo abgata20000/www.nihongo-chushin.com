@@ -19,20 +19,19 @@
             return {}
         },
         mounted() {
-            this.fetchUsers({}, true);
+            this.$channel.setFetchUsersCallback(this.fetchUsers);
+            this.vm.$on("fetchUsers", this.fetchUsers);
         },
         computed: {
-            ...mapGetters("UsersModule", ["users"])
+            ...mapGetters("UsersModule", ["users"]),
+            ...mapGetters(["vm"])
         },
         methods: {
             ...mapActions("UsersModule", ["updateUsers"]),
-            fetchUsers(params = {},isInit = false) {
+            fetchUsers(params = {}) {
                 this.$http.get(API_URL).then((res) => {
                     const users = res.data;
                     this.updateUsers(users);
-                    if (isInit) {
-                        this.$channel.setFetchUsersCallback(this.fetchUsers);
-                    };
                 });
             }
         }

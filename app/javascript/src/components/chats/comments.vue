@@ -22,14 +22,16 @@
         },
         computed: {
             ...mapGetters("ChatsModule", ["chats"]),
-            showCommentCount() { return 30 }
+            ...mapGetters("RoomModule",["showCommentCount"]),
+            ...mapGetters(["vm"])
         },
         mounted() {
-            this.fetchChats({}, true);
+            this.$channel.setFetchCommentsCallback(this.fetchChats);
+            this.vm.$on("fetchChats", this.fetchChats);
         },
         methods: {
             ...mapActions("ChatsModule", ["updateChats"]),
-            fetchChats(params = {}, isInit = false) {
+            fetchChats(params = {}) {
                 if (this.fetching) {
                     this.nextFetch = true;
                     return;
@@ -41,9 +43,6 @@
                     .then((res) => {
                         let chats = res.data;
                         this.addComments(chats);
-                        if (isInit) {
-                            this.$channel.setFetchCommentsCallback(this.fetchChats);
-                        };
                     })
                     .finally(() => {
                         this.fetching = false;

@@ -21,21 +21,20 @@
         data() {
             return {}
         },
-        mounted() {
-            this.fetchRoom({}, true);
-        },
         computed: {
-            ...mapGetters("RoomModule", ["room"])
+            ...mapGetters("RoomModule", ["room"]),
+            ...mapGetters(["vm"])
+        },
+        mounted() {
+            this.$channel.setFetchRoomCallback(this.fetchRoom);
+            this.vm.$on("fetchRoom", this.fetchRoom);
         },
         methods: {
             ...mapActions("RoomModule", ["updateRoom"]),
-            fetchRoom(params = {},isInit = false) {
+            fetchRoom(params = {}) {
                 this.$http.get(API_URL).then((res) => {
                     const myPage = res.data;
                     this.updateRoom(myPage);
-                    if (isInit) {
-                        this.$channel.setFetchRoomCallback(this.fetchRoom);
-                    };
                 });
             }
         }
