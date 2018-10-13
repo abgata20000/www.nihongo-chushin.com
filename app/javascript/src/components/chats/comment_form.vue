@@ -8,7 +8,6 @@
 <script>
     import store from "../../stores/chats_store";
     import {mapGetters, mapActions} from "vuex";
-
     const API_URL = "/api/chats";
     export default {
         store,
@@ -25,10 +24,13 @@
                 set(value) {
                     this.updateComment(value);
                 }
-            }
+            },
+            ...mapGetters(["vm"])
         },
         mounted() {
             this.setCommentFocus();
+            // 無理矢理感漂うが他の方法が見つからない…
+            this.vm.$on("setCommentFocus", this.setCommentFocus);
         },
         methods: {
             ...mapActions("CommentFormModule", ["updateComment"]),

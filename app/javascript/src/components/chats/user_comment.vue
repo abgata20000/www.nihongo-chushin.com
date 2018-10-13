@@ -40,17 +40,16 @@
                   linkAttr: {target: '_blank'}
               });
             },
-            ...mapGetters("CommentFormModule", ["comment"])
+            ...mapGetters("CommentFormModule", ["comment"]),
+            ...mapGetters(["vm"])
         },
         methods: {
             ...mapActions("CommentFormModule", ["updateComment"]),
             addMention() {
                 let tmpComment = [this.mention, this.comment].join(" ");
                 this.updateComment(tmpComment);
-                // HACK: フォーカス当てるのが無理やりすぎるのでもっとスマートな方法で実装したい
-                // vuexにメソッド登録できないものか…
-                // もしくはpropsでメソッド渡してくるか(間に一つコンポーネント挟んでいるのでできれば別の方法がいい)
-                // this.$parent.$parent.setCommentFocus()
+                // 無理矢理感漂うが他の方法が見つからない…
+                this.vm.$emit("setCommentFocus");
             }
         }
     }
