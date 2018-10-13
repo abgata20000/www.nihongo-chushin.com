@@ -8,7 +8,7 @@ const store = new Vuex.Store({
         comment: "",
         show_comment_count: DEFAULT_SHOW_COMMENT_COUNT,
         comment_disconnected_time: DEFAULT_COMMENT_DISCONNECTED_TIME,
-        connection_disconnected_time: DEFAULT_CONNECTION_DISCONNECTED_TIME,
+        connection_disconnected_time: DEFAULT_CONNECTION_DISCONNECTED_TIME
     },
     getters: {
         comment(state) {
