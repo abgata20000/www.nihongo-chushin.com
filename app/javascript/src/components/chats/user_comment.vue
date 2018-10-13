@@ -1,19 +1,13 @@
 <template>
-    <div class="comment-wrap">
-        <div class="right-content-wrap">
-            <div class="right-content">
-                <div class="desc medium" :class="chat.color_class" v-html="htmlComment"></div>
-            </div>
-        </div>
-        <div class="left-content">
-            <div class="user-info">
-                <div class="avator medium" :class="chat.color_class">
-                    <img :src="chat.icon_url" @click="addMention()" />
-                    <div class="name">
-                        {{chat.nickname}}
-                    </div>
-                </div>
-            </div>
+    <div class="comment">
+        <figure :class="commentImageClass">
+            <img :class="chat.color_class" :src="chat.icon_url" @click="addMention()" />
+            <figcaption class="comment-img-description">
+                {{chat.nickname}}
+            </figcaption>
+        </figure>
+        <div :class="[chat.color_class, commentTextClass]">
+            <p class="comment-text" :class="chat.color_class" v-html="htmlComment"></p>
         </div>
     </div>
 </template>
@@ -39,6 +33,18 @@
                   br: true,
                   linkAttr: {target: '_blank'}
               });
+            },
+            userId() {
+                return this.$store.getters["MyPageModule/myPage"].id;
+            },
+            isOwnComment() {
+                return this.userId == this.chat.user_id;
+            },
+            commentTextClass() {
+               return this.isOwnComment ? "comment-text-left" : "comment-text-right";
+            },
+            commentImageClass() {
+                return this.isOwnComment ? "comment-img-right" : "comment-img-left";
             },
             ...mapGetters("CommentFormModule", ["comment"]),
             ...mapGetters(["vm"])

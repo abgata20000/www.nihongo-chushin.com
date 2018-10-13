@@ -1,5 +1,5 @@
 <template>
-    <ul id="comments">
+    <ul class="comments-wrap">
         <comment v-for="chat in chats" :chat="chat"></comment>
     </ul>
 </template>

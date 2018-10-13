@@ -11,7 +11,7 @@ class Color < ApplicationHash
   create(name: "lightgreen", text_color: "#404040", color_code: false)
   create(name: "EFB435", text_color: "#FFF", color_code: true)
   create(name: "gray", text_color: "#FFF", color_code: false)
-  create(name: "black", text_color: "#FFF", color_code: false)
+  # create(name: "black", text_color: "#FFF", color_code: false)
   create(name: "f8b500", text_color: "#FFF", color_code: true)
   create(name: "CDC673", text_color: "#FFF", color_code: true)
   create(name: "DDA0DD", text_color: "#FFF", color_code: true)

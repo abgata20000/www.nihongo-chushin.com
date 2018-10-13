@@ -1,14 +1,9 @@
 <template>
     <div class="comment-wrap">
-        <div class="right-content-wrap">
-            <div class="right-content">
-                <div class="system">
-                    <p class="message">{{chat.comment}}</p>
-                    <p class="datetime">{{chat.created_at}}</p>
-                </div>
-            </div>
+        <div class="system-comment">
+            <span class="message">{{chat.comment}}</span>
+            <span class="date">{{chat.created_at}}</span>
         </div>
-        <div class="left-content"></div>
     </div>
 </template>
 
