@@ -2,6 +2,7 @@
     <div id="chats-wrap">
         <div id="chats">
             <room></room>
+            <comment-form></comment-form>
         </div>
     </div>
 </template>
@@ -10,11 +11,13 @@
     import {mapGetters, mapActions} from "vuex";
     import store from "../../stores/chats_store";
     import Room from "./room";
+    import CommentForm from "./comment_form";
     const API_URL = "/api/my_page";
     export default {
         store,
         components: {
             Room,
+            CommentForm
         },
         data() {
             return {}

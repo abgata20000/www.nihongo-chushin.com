@@ -11,7 +11,7 @@ const ChatsStore = new Vuex.Store({
         RoomModule,
         ChatsModule,
         UsersModule,
-        CommentFormModule,
+        CommentFormModule
     }
 });
 export default ChatsStore;
