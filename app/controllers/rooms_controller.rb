@@ -1,4 +1,5 @@
 class RoomsController < ApplicationController
+  before_action :check_login, only: %w[new create]
   before_action :check_current_room, only: %w[show edit update]
   before_action :check_room_owner, only: %w[edit update]
   before_action :find_room, only: %w[show edit update]
@@ -56,5 +57,10 @@ class RoomsController < ApplicationController
 
   def controller_params
     params.fetch(:room, {}).permit(:name, :num, :password)
+  end
+
+  def check_login
+    return if logged_in?
+    redirect_to rooms_path
   end
 end
