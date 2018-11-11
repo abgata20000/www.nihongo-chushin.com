@@ -8,15 +8,15 @@ test:
 
 staging:
   adapter: redis
-  url: <%= ENV["REDIS_URL"] %>
+  url: <%= ENV["REDISCLOUD_URL"] %>
   channel_prefix: www_nihongo-chushin_com_staging
 
 staging_heroku:
   adapter: redis
-  url: <%= ENV["REDIS_URL"] %>
+  url: <%= ENV["REDISCLOUD_URL"] %>
   channel_prefix: www_nihongo-chushin_com_staging_heroku
 
 production:
   adapter: redis
-  url: <%= ENV["REDIS_URL"] %>
+  url: <%= ENV["REDISCLOUD_URL"] %>
   channel_prefix: www_nihongo-chushin_com_production
