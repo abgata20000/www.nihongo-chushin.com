@@ -8,7 +8,8 @@ head
   meta(meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no")
   = csrf_meta_tags
   = csp_meta_tag
-  = stylesheet_link_tag    'application', media: 'all'
+  = stylesheet_link_tag 'application', media: 'all'
+  = stylesheet_pack_tag 'application', media: 'all'
   = javascript_pack_tag 'application'
   - if Rails.env.production?
     = render 'analytics'

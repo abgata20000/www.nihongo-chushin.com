@@ -3,6 +3,7 @@ class StaticPagesController < ApplicationController
   def top; end
 
   def vue_sample; end
+  def sample; end
 
   private
 

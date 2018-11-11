@@ -1,4 +1,4 @@
-import {Vuex} from "./../common/vue";
+import {Vuex} from "./../libs/vue";
 
 const store = new Vuex.Store({
     state: {

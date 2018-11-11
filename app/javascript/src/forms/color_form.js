@@ -1,5 +1,5 @@
 //
-import {Vue} from "../common/vue";
+import {Vue} from "../libs/vue";
 
 class ColorForm {
     static start() {

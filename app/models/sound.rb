@@ -1,10 +1,10 @@
 class Sound < ApplicationHash
   field :name
 
-  5.times do |i|
-    id = i + 1
-    create(name: "beep_#{id}")
-  end
+  # 5.times do |i|
+  #   id = i + 1
+  #   create(name: "beep_#{id}")
+  # end
 
   create(name: "silent")
 

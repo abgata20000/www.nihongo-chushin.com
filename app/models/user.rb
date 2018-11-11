@@ -41,7 +41,7 @@
 class User < ApplicationRecord
   include UserIconSupportable
   DEFAULT_ICON = "icon_1".freeze
-  DEFAULT_COLOR = "black".freeze
+  DEFAULT_COLOR = "gray".freeze
   DEFAULT_SOUND = "silent".freeze
   DEFAULT_LANG = "ja".freeze
 

@@ -1,0 +1,24 @@
+.comments-wrap
+  - (rand(20) + 1).times do |_i|
+    .comment
+      figure.comment-img-left
+        img.color_darkslategray src="images/icon/icon_1.png"
+        figcaption.comment-img-description
+          | ああああああああああああ
+      .comment-text-right.color_darkslategray
+        p.comment-text.color_darkslategray
+          - (rand(10) + 1).times do |_i|
+            = "あ" * (rand(10) + 1)
+            br
+    .comment
+      figure.comment-img-right
+        img.color_gray src="images/icon/icon_50.png"
+        figcaption.comment-img-description
+          | name
+      .comment-text-left.color_gray
+        p.comment-text.color_gray
+          - (rand(10) + 1).times do |i|
+            = "あ" * (rand(10) + 1)
+            br
+.comment-form
+  textarea

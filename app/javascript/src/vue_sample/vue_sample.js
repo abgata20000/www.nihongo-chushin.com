@@ -1,5 +1,5 @@
 //
-import {Vue} from "../common/vue";
+import {Vue} from "../libs/vue";
 import App from '../components/app.vue'
 
 class Vue_sample {
