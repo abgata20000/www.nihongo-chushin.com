@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   helper Webpacker::Helper
   include SessionsHelper
   protect_from_forgery with: :exception
+  before_action :ensure_domain if Rails.env.production?
   before_action :set_request_variant
   before_action :site_http_basic_authenticate_with
 
@@ -57,6 +58,15 @@ class ApplicationController < ActionController::Base
 
   def remote_ip
     @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
+  end
+
+  def ensure_domain
+    return if request.env['HTTP_HOST'] == default_host
+    redirect_to "#{request.protocol}#{default_host}#{request.fullpath}", status: 301
+  end
+
+  def default_host
+    ENV['DEFAULT_HOST_NAME']
   end
 
   def user_agent
