@@ -63,6 +63,8 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  config.session_store :redis_store, servers: ENV["REDISCLOUD_URL"], expire_in: 30.days
+
   config.site_name = "Nihongo中心"
   config.site_url = "localhost:3000"
 end
