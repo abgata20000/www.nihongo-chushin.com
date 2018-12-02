@@ -61,6 +61,7 @@ class RoomsController < ApplicationController
 
   def check_login
     return if logged_in?
+
     redirect_to rooms_path
   end
 end

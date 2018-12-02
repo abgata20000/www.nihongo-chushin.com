@@ -47,6 +47,8 @@ class ApplicationRecord < ActiveRecord::Base
 
   def show_attributes
     attributes.each_with_object({}) do |(key, value), hash|
+      next if ignore_show_attribute_keys.include?(key)
+
       hash[key] = if value.present? && value.is_a?(ActiveSupport::TimeWithZone)
                     I18n.l(value)
                   else
@@ -75,5 +77,11 @@ class ApplicationRecord < ActiveRecord::Base
 
   def notice_to_slack(message)
     NihongoChushin::SlackUtils.post(message)
+  end
+
+  private
+
+  def ignore_show_attribute_keys
+    []
   end
 end

@@ -32,7 +32,7 @@
 class Room < ApplicationRecord
   class ForApi < ActiveType::Record[Room]
     def show_attributes
-      super
+      super.merge(users: users.map(&:show_attributes))
     end
   end
 end

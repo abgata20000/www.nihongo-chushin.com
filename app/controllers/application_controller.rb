@@ -61,12 +61,13 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_domain
-    return if request.env['HTTP_HOST'] == default_host
-    redirect_to "#{request.protocol}#{default_host}#{request.fullpath}", status: 301
+    return if request.env["HTTP_HOST"] == default_host
+
+    redirect_to "#{request.protocol}#{default_host}#{request.fullpath}", status: :moved_permanently
   end
 
   def default_host
-    ENV['DEFAULT_HOST_NAME']
+    ENV["DEFAULT_HOST_NAME"]
   end
 
   def user_agent

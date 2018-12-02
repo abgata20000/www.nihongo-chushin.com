@@ -46,8 +46,11 @@ end
 # == Route Map
 #
 #                    Prefix Verb   URI Pattern                                                                              Controller#Action
+#               sidekiq_web        /my-sidekiq                                                                              Sidekiq::Web
 #                      root GET    /                                                                                        static_pages#top
 #                vue_sample GET    /vue_sample(.:format)                                                                    static_pages#vue_sample
+#                    sample GET    /sample(.:format)                                                                        static_pages#sample
+#                 like_line GET    /like_line(.:format)                                                                     static_pages#like_line
 #                  my_pages GET    /my_pages(.:format)                                                                      my_pages#show
 #                           PATCH  /my_pages(.:format)                                                                      my_pages#update
 #                           PUT    /my_pages(.:format)                                                                      my_pages#update
@@ -77,6 +80,8 @@ end
 #                  api_room GET    /api/room(.:format)                                                                      api/rooms#show
 #           api_rooms_users GET    /api/rooms/users(.:format)                                                               api/rooms/users#index
 #               api_my_page GET    /api/my_page(.:format)                                                                   api/my_pages#show
+#           api_v1_sessions POST   /api/v1/sessions(.:format)                                                               api/v1/sessions#create
+#            api_v1_session DELETE /api/v1/sessions/:id(.:format)                                                           api/v1/sessions#destroy
 #        rails_service_blob GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 # rails_blob_representation GET    /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #        rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show

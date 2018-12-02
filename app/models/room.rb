@@ -83,14 +83,11 @@ class Room < ApplicationRecord
   end
 
   def title_with_nums
-    "(#{users.count}/#{num})#{name}"
+    "#{name}(#{users.count}/#{num})"
   end
 
   def show_attributes
-    tmp = attributes
-    tmp.delete("password")
-    tmp[:room_name] = title_with_nums
-    tmp
+    super.merge(room_name: title_with_nums)
   end
 
   def close
@@ -136,5 +133,9 @@ class Room < ApplicationRecord
 
   def echo_system_comment(message)
     Chat::SystemMessage.echo(id, message, fetch_users: true)
+  end
+
+  def ignore_show_attribute_keys
+    ["password"]
   end
 end

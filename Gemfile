@@ -66,6 +66,7 @@ gem 'scaffoldable', git: 'https://github.com/radicodeinc/scaffoldable.git'
 gem 'sinatra', require: false
 # slack
 gem 'slack-notifier'
+gem 'rack-cors'
 
 group :test, :development do
   gem 'binding_of_caller'
