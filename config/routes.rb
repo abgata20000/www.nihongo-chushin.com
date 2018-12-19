@@ -80,8 +80,13 @@ end
 #                  api_room GET    /api/room(.:format)                                                                      api/rooms#show
 #           api_rooms_users GET    /api/rooms/users(.:format)                                                               api/rooms/users#index
 #               api_my_page GET    /api/my_page(.:format)                                                                   api/my_pages#show
-#           api_v1_sessions POST   /api/v1/sessions(.:format)                                                               api/v1/sessions#create
-#            api_v1_session DELETE /api/v1/sessions/:id(.:format)                                                           api/v1/sessions#destroy
+#           api_v1_sessions GET    /api/v1/sessions(.:format)                                                               api/v1/sessions#show
+#                           DELETE /api/v1/sessions(.:format)                                                               api/v1/sessions#destroy
+#                           POST   /api/v1/sessions(.:format)                                                               api/v1/sessions#create
+#              api_v1_rooms GET    /api/v1/rooms(.:format)                                                                  api/v1/rooms#index
+#                           POST   /api/v1/rooms(.:format)                                                                  api/v1/rooms#create
+#               api_v1_room PATCH  /api/v1/rooms/:id(.:format)                                                              api/v1/rooms#update
+#                           PUT    /api/v1/rooms/:id(.:format)                                                              api/v1/rooms#update
 #        rails_service_blob GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                               active_storage/blobs#show
 # rails_blob_representation GET    /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations#show
 #        rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show

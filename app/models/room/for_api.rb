@@ -31,8 +31,16 @@
 
 class Room < ApplicationRecord
   class ForApi < ActiveType::Record[Room]
+    after_create :user_join_the_room
+
     def show_attributes
       super.merge(users: users.map(&:show_attributes))
+    end
+
+    private
+
+    def user_join_the_room
+      ActiveType.cast(user, User::ForCurrentUser).join_room(self, create_room: true)
     end
   end
 end

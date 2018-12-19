@@ -108,7 +108,7 @@ module Api
         if my_model.save
           render json: my_model.show_attributes, status: :ok
         else
-          render json: { errors: my_model.show_errors }, status: :ok
+          render json: my_model.show_errors, status: :ok
         end
       end
 

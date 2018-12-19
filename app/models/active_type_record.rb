@@ -3,7 +3,5 @@ class ActiveTypeRecord < ActiveType::Object
     attributes
   end
 
-  def show_errors
-    errors.full_messages
-  end
+  { errors: errors.full_messages }
 end

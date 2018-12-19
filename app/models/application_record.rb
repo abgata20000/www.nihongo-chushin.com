@@ -79,8 +79,6 @@ class ApplicationRecord < ActiveRecord::Base
     NihongoChushin::SlackUtils.post(message)
   end
 
-  private
-
   def ignore_show_attribute_keys
     []
   end
