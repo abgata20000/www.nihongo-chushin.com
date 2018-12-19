@@ -3,6 +3,10 @@ module Api
     class RoomsController < ::Api::V1::ApplicationController
       private
 
+      def list_model_class
+        model_class.includes(:users)
+      end
+
       def model_class
         Room::ForApi
       end

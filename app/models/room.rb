@@ -83,7 +83,7 @@ class Room < ApplicationRecord
   end
 
   def title_with_nums
-    "#{name}(#{users.count}/#{num})"
+    "#{name}(#{users.size}/#{num})"
   end
 
   def show_attributes
